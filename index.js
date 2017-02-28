@@ -10,6 +10,7 @@ var error = function (err, response, body) {
     console.log('ERROR [%s]', err);
 };
 
+//variabel som lagrar datat
 var text1;
 
 var success = function (data) {
@@ -66,7 +67,7 @@ http.createServer(function (request, response) {
    // Content Type: text/plain
    response.writeHead(200, {'Content-Type': 'text/plain'});
    
-
+//indexet bestämmer vilket tweet som visas
    response.write(text1[0].text);
    // Send the response body as "Hello World"
    response.end();
