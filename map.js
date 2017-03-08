@@ -12,7 +12,7 @@ var colors = [["positive", "green"],["negative", "red"], ["neutral", "yellow"]];
 
 //Array with the information about the tweet to place a marker
 var tweetsData = [
-    { //Första markören
+    { //first marker
         "type": "Feature",
         "properties": {
             "opinion": "positive",
@@ -67,7 +67,7 @@ map.on("load", function() {
 
     });
 
-    //Add layers for different opinions. Red if negative and green if positive.
+    //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
     colors.forEach(function(colors) {
         map.addLayer({
             "id": "opinionis" + colors[0],
