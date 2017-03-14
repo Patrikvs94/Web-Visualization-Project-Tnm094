@@ -2,8 +2,11 @@ import tweepy
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
+import json
 import time
 import os
+from geopy.geocoders import Nominatim
+from geojson import Feature, Point, FeatureCollection
 
 
 #Initializing our keys and secrets for authentication
@@ -23,6 +26,11 @@ authorization.set_access_token(access_token, access_secret)
 api = tweepy.API(authorization)
 
 
+#Creating our feature list
+FeatureCollection = {}
+FeatureCollection['type'] = "FeatureCollection"
+FeatureCollection['features'] = []
+
 #Create a class for the stream which is supposed to use a given json file as a path. Furthermore
 #we fetch data from an open stream which gives us information that we want to trim a bit using the split function.
 #We then write to the json file and if we reach an error we sleep the system and print a status message
@@ -34,21 +42,49 @@ class Listener(StreamListener):
 
         #If you're using python 3.x.x make sure you're using exceptions or your program won't work
         #the try-except block can be skipped
-        
         try:
-            tweet = data.split(',"text":"')[1].split('","source":"')[0]
-            print( time.strftime("%Y%m%d_%H%M%S"), tweet)
-     
-            # Open, Write then Close the file
-            savefile = open(self.path, 'a')
-            savefile.write(data)
-            savefile.close()
+            j = json.loads(data)
+            tweet = j['user']['location']
+            if tweet is not None:
+                encoded = tweet.encode("utf-8", errors='ignore')
+
+                #Does something with geopy
+                geolocator = Nominatim()
+
+                location = geolocator.geocode(encoded.decode("utf-8"))
+                if location is not None:
+                    data_geo = {}
+                    data_geo["type"] = "Feature"
+                    data_geo['properties'] = {}
+                    data_geo['properties']['opinion'] = "positive"
+                    data_geo['properties']['description'] = j['text'].encode("utf-8", errors='ignore')
+                    data_geo['properties']['description'].decode('utf-8')
+                    data_geo['geometry'] = {}
+                    data_geo['geometry']['type'] = "Point"
+                    data_geo['geometry']['coordinates'] = []
+                    data_geo['geometry']['coordinates'].append(location.latitude)
+                    data_geo['geometry']['coordinates'].append(location.longitude)
+                    FeatureCollection['features'].append(data_geo)
+            
+                    savefile = open(self.path, 'w')
+                    savefile.write(str(FeatureCollection))
+                    savefile.write('\n')
+                    savefile.close()
+                    
+                print(encoded.decode("utf-8"))
+                
+                # Open, Write then Close the file
+                #savefile = open(self.path, 'a')
+                #savefile.write(str(encoded))
+                #savefile.write('\n')
+                #savefile.close()
+                
         except BaseException(e):
             print('failed ondata,', str(e))
             time.sleep(5)
         #on_error can also be skipped if not using python 3.x.x
     def on_error(self, status):
-        print(status)
+        print('Error:' + status)
 
 
 #Initializing the filename of the json file
@@ -66,5 +102,6 @@ twitterStream = Stream(
         path = file_path
     ))
 
+
 #Filtering the information given
-twitterStream.filter(locations=[-79.52,37.89,-74.99,40.15], track=['realDonaldTrump'])
+twitterStream.filter(track=['realDonaldTrump'])
