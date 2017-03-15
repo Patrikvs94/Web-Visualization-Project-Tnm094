@@ -1,3 +1,4 @@
+//Provar att lägga till en kommentar
 //Load map
 mapboxgl.accessToken = 'pk.eyJ1IjoiamFza2E3MjQiLCJhIjoiY2l6Z3JucDF2MDAxZTMzdGY5ZDY1dTdpcSJ9.ke-er3jChidKw_FqDcFK7Q';
 var map = new mapboxgl.Map({
