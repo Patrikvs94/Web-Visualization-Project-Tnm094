@@ -100,7 +100,6 @@ map.on('click', function (e) {
 
     var feature = features[0];
 
-    var info = "<blockquote class='twitter-tweet'><p>" + feature.properties.description + "</p>&mdash; kandidaten (@kandidatens) <a href='https://twitter.com/kandidatens/status/841955881910689800'>15 mars 2017</a></blockquote>";
 
 
 
@@ -111,10 +110,12 @@ map.on('click', function (e) {
         .setHTML("<div id='container'></div>")
         .addTo(map);
 
-
+    //When clicked show the right twitter widget
     twttr.widgets.createTweet(
         feature.properties.description,
-        document.getElementById('container')
+        document.getElementById('container'), {
+            width: "300"
+        }
     );
 });
 
