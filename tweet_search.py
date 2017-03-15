@@ -4,7 +4,7 @@ from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 import time
 import os
- 
+
 consumer_key = '7PIDujS6A8ZsxgGbYIowfOL1s'
 consumer_secret = 'QlKKNvIAR9mFqJRHM8JXaJbJ2VvISOcAZQeb5Zjd4scirmiXBh'
 access_token = '828544457918267393-6uopKW9Ztef0jZ2i6FDMQkwg0mNq178'

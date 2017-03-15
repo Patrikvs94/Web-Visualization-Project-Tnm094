@@ -11,6 +11,8 @@ var map = new mapboxgl.Map({
 
 var colors = [["positive", "green"],["negative", "red"], ["neutral", "yellow"]];
 
+
+/* BEHÖVS INTE OM VI LÄSER DIREKT FRÅN JSON-FIL
 //Array with the information about the tweet to place a marker
 var tweetsData = [
     { //first marker
@@ -40,8 +42,6 @@ function addTweet(opinion, description, coordinates){
             "coordinates": coordinates
         }
     })
-
-
 }
 
 function clearTweets(){
@@ -54,18 +54,19 @@ addTweet("negative", '<img src="https://g.twimg.com/about/feature-corporate/imag
     '<a href="https://twitter.com/hashtag/nature?src=hash">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash">' +
     '#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Dept of Interior ' +
     '(@Interior) <a href="https://twitter.com/Interior/status/463440424141459456">May 5, 2014</a></blockquote>', [-45, 67] );
-addTweet("neutral", "Här är en neutral tweet", [76, 54]);
+addTweet("neutral", "Här är en neutral tweet", [76, 54]);*/
 
+
+//Load map with source and layers
 map.on("load", function() {
-
     //Add a source with tweets
     map.addSource("tweets", {
         "type": "geojson",
-        "data": {
+        "data": "tweetData.geojson"/*{
         "type": "FeatureCollection",
             "features": tweetsData
     }
-
+*/
     });
 
     //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
@@ -80,6 +81,7 @@ map.on("load", function() {
                 "circle-blur": 0.5
             },
             "filter": ["==", "opinion", colors[0]]
+
 
         })
     })
@@ -98,12 +100,22 @@ map.on('click', function (e) {
 
     var feature = features[0];
 
+    var info = "<blockquote class='twitter-tweet'><p>" + feature.properties.description + "</p>&mdash; kandidaten (@kandidatens) <a href='https://twitter.com/kandidatens/status/841955881910689800'>15 mars 2017</a></blockquote>";
+
+
+
     // Populate the popup and set its coordinates
     // based on the feature found.
     var popup = new mapboxgl.Popup()
         .setLngLat(feature.geometry.coordinates)
-        .setHTML(feature.properties.description)
+        .setHTML("<div id='container'></div>")
         .addTo(map);
+
+
+    twttr.widgets.createTweet(
+        feature.properties.description,
+        document.getElementById('container')
+    );
 });
 
 // Use the same approach as above to indicate that the symbols are clickable

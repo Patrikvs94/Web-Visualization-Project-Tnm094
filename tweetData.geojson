@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "opinion": "negative",
+        "description": "20"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.12911152370515,
+          38.79930767201779
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+          "opinion": "positive",
+          "description": "841955881910689800"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.192421,
+          58.587745
+        ]
+      }
+    }
+  ]
+}

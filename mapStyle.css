@@ -9,3 +9,19 @@ body {
     bottom:0;
     width:100%;
 }
+
+.twitter-tweet {
+    color: red;
+    font-size: 10px;
+}
+
+.twitter-tweet a:link {
+    color: yellow;
+
+}
+
+.twitter-tweet p {
+
+    font-size: 12px;
+    left: 0px;
+}
