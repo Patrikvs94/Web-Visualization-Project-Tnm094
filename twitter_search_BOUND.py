@@ -41,7 +41,7 @@ class Listener(StreamListener):
      
             # Open, Write then Close the file
             savefile = open(self.path, 'a')
-            savefile.write(data)
+            savefile.write(print)
             savefile.close()
         except BaseException(e):
             print('failed ondata,', str(e))

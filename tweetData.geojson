@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "opinion": "positive",
+        "description": "<p>Hej</p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.12911152370515,
+          38.79930767201779
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+          "opinion": "negative",
+          "description": "<p>Hej då</p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.192421,
+          58.587745
+        ]
+      }
+    }
+  ]
+}

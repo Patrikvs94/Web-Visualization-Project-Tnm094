@@ -10,6 +10,8 @@ var map = new mapboxgl.Map({
 
 var colors = [["positive", "green"],["negative", "red"], ["neutral", "yellow"]];
 
+
+/* BEHÖVS INTE OM VI LÄSER DIREKT FRÅN JSON-FIL
 //Array with the information about the tweet to place a marker
 var tweetsData = [
     { //first marker
@@ -39,8 +41,6 @@ function addTweet(opinion, description, coordinates){
             "coordinates": coordinates
         }
     })
-
-
 }
 
 function clearTweets(){
@@ -53,18 +53,19 @@ addTweet("negative", '<img src="https://g.twimg.com/about/feature-corporate/imag
     '<a href="https://twitter.com/hashtag/nature?src=hash">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash">' +
     '#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Dept of Interior ' +
     '(@Interior) <a href="https://twitter.com/Interior/status/463440424141459456">May 5, 2014</a></blockquote>', [-45, 67] );
-addTweet("neutral", "Här är en neutral tweet", [76, 54]);
+addTweet("neutral", "Här är en neutral tweet", [76, 54]);*/
 
+
+//Load map with source and layers
 map.on("load", function() {
-
     //Add a source with tweets
     map.addSource("tweets", {
         "type": "geojson",
-        "data": {
+        "data": "tweetData.geojson"/*{
         "type": "FeatureCollection",
             "features": tweetsData
     }
-
+*/
     });
 
     //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
@@ -79,6 +80,7 @@ map.on("load", function() {
                 "circle-blur": 0.5
             },
             "filter": ["==", "opinion", colors[0]]
+
 
         })
     })
