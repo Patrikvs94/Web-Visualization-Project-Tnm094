@@ -37,7 +37,7 @@ var twitter = new Twitter(config);
 
 //Example calls
 
-twitter.getUserTimeline({ screen_name: 'kandidatens', count: '10'}, error, success);
+//twitter.getUserTimeline({ screen_name: 'kandidatens', count: '10'}, error, success);
 
 //twitter.getMentionsTimeline({ count: '10'}, error, success);
 
@@ -52,7 +52,7 @@ twitter.getUserTimeline({ screen_name: 'kandidatens', count: '10'}, error, succe
 // Get 10 tweets containing the hashtag haiku
 //
 
-//twitter.getSearch({'q':'#haiku','count': 10}, error, success);
+twitter.getSearch({'q':'haiku','count': 200}, error, success);
 
 //
 // Get 10 popular tweets with a positive attitude about a movie that is not scary
