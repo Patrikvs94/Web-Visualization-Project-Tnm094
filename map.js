@@ -62,7 +62,7 @@ map.on("load", function() {
     //Add a source with tweets
     map.addSource("tweets", {
         "type": "geojson",
-        "data": "tweetData.geojson"/*{
+        "data": "tweets_collected.json"/*{
         "type": "FeatureCollection",
             "features": tweetsData
     }
@@ -112,7 +112,7 @@ map.on('click', function (e) {
 
     //When clicked show the right twitter widget
     twttr.widgets.createTweet(
-        feature.properties.description,
+        feature.properties.id,
         document.getElementById('container'), {
             width: "300"
         }
