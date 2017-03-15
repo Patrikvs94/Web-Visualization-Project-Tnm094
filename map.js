@@ -100,12 +100,22 @@ map.on('click', function (e) {
 
     var feature = features[0];
 
+    var info = "<blockquote class='twitter-tweet'><p>" + feature.properties.description + "</p>&mdash; kandidaten (@kandidatens) <a href='https://twitter.com/kandidatens/status/841955881910689800'>15 mars 2017</a></blockquote>";
+
+
+
     // Populate the popup and set its coordinates
     // based on the feature found.
     var popup = new mapboxgl.Popup()
         .setLngLat(feature.geometry.coordinates)
-        .setHTML(feature.properties.description)
+        .setHTML("<div id='container'></div>")
         .addTo(map);
+
+
+    twttr.widgets.createTweet(
+        feature.properties.description,
+        document.getElementById('container')
+    );
 });
 
 // Use the same approach as above to indicate that the symbols are clickable

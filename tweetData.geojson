@@ -4,8 +4,8 @@
     {
       "type": "Feature",
       "properties": {
-        "opinion": "positive",
-        "description": "<p>Hej</p>"
+        "opinion": "negative",
+        "description": "20"
       },
       "geometry": {
         "type": "Point",
@@ -18,8 +18,8 @@
     {
       "type": "Feature",
       "properties": {
-          "opinion": "negative",
-          "description": "<p>Hej då</p>"
+          "opinion": "positive",
+          "description": "841955881910689800"
       },
       "geometry": {
         "type": "Point",
