@@ -128,7 +128,6 @@ map.on('mousemove', function (e) {
 
 
 //document.body.onLoad = function () {
-
     for (i = 0; i < 10; i++)
     {
         var temp = document.createElement("div");
@@ -136,8 +135,46 @@ map.on('mousemove', function (e) {
         temp.id = "bubble" + i;
         temp.className = "draggable";
         temp.innerHTML = trenddata.trends[i].name;
+        //temp.onclick = expandDiv();
+        //temp.style.left = '45vw';
+        //temp.style.top = '50vh';
 
-        document.getElementById("main").appendChild(temp);
+
+        document.getElementById("bubble-container").appendChild(temp);
     }
-
 //}
+
+
+/***
+ *Dessa har ej testats ordentligt
+ */
+/*function expandDiv() {
+    var temp = document.getElementById("bubble-container");
+    temp.style.width = '100vw';
+    temp.style.height = '100vh';
+    temp.style.top = '0';
+    temp.style.left = '0';
+
+
+}*/
+
+/*function makeNewPosition(){
+
+    // Get viewport dimensions (remove the dimension of the div)
+    var h = $(window).height() - 50;
+    var w = $(window).width() - 50;
+
+    var nh = Math.floor(Math.random() * h);
+    var nw = Math.floor(Math.random() * w);
+
+    return [nh,nw];
+
+}
+
+function animateDiv(){
+    var newq = makeNewPosition();
+    $('.a').animate({ top: newq[0], left: newq[1] }, function(){
+        animateDiv();
+    });
+
+};*/
