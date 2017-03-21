@@ -54,7 +54,7 @@ class Listener(StreamListener):
                 coordinates = []
                 coordinates.append(location.longitude)
                 coordinates.append(location.latitude)
-                temp = {'type': "Feature" , 'properties': {'opinion': 'positive', 'id': j['id'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                temp = {'type': "Feature" , 'properties': {'opinion': 'positive', 'id': str(j['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print temp
                 features.append(temp)
                 collection = {'type': "FeatureCollection", 'features': features}
@@ -86,4 +86,4 @@ twitterStream = Stream(
 
 
 #Filtering the information given
-twitterStream.filter(track=['realDonaldTrump'])
+twitterStream.filter(track=['InternationalDayOfHappiness'])
