@@ -125,3 +125,19 @@ map.on('mousemove', function (e) {
     var features = map.queryRenderedFeatures(e.point, { layers: ["opinionispositive", "opinionisnegative", "opinionisneutral"] });
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 });
+
+
+//document.body.onLoad = function () {
+
+    for (i = 0; i < 10; i++)
+    {
+        var temp = document.createElement("div");
+
+        temp.id = "bubble" + i;
+        temp.className = "draggable";
+        temp.innerHTML = trenddata.trends[i].name;
+
+        document.getElementById("main").appendChild(temp);
+    }
+
+//}

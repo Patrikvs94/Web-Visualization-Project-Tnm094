@@ -1,5 +1,21 @@
 var angle = 0;
 
+
+//sparar trend.json till en variabel trenddata
+var trenddata = {};
+$.ajax({
+    url: "trends.json",
+    async: false,
+    dataType: 'json',
+    success: function(data) {
+        trenddata = data;
+    }
+});
+
+// testa printa ut trenddata
+console.log(trenddata.trends[3].name);
+
+
 interact('.draggable').gesturable({
     onmove: function (event) {
         var arrow = document.getElementById('arrow');
