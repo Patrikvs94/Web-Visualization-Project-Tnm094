@@ -128,20 +128,7 @@ map.on('mousemove', function (e) {
 
 
 //document.body.onLoad = function () {
-    for (i = 0; i < 10; i++)
-    {
-        var temp = document.createElement("div");
 
-        temp.id = "bubble" + i;
-        temp.className = "draggable";
-        temp.innerHTML = trenddata.trends[i].name;
-        //temp.onclick = expandDiv();
-        //temp.style.left = '45vw';
-        //temp.style.top = '50vh';
-
-
-        document.getElementById("bubble-container").appendChild(temp);
-    }
 //}
 
 

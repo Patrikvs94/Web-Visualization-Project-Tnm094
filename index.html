@@ -14,14 +14,18 @@
     <link href="mapStyle.css" rel="stylesheet"/>
 
 </head>
-<body>
+<body onload="changefilter(5)">
 
-    <div id="map"></div>
-    <div id="bubble-container">
+    <div id="blurmap">
+        <div id="map"></div>
+    </div>
+
+    <div id="bubble-container" onclick="changefilter(0)">
         <!-- <div id="bubble" class="draggable">Trump</div> -->
     </div>
 
 
     <script src="map.js"></script>
+    <script src="bubbles.js"></script>
 </body>
 </html>

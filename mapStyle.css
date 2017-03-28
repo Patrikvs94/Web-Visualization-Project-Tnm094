@@ -13,10 +13,10 @@ body {
 #bubble-container {
     /*float: left;*/
     position: absolute;
-    height: 30vh;
+   /* height: 30vh;
     width: 50%;
     top: 35vh;
-    left: 25%;
+   left: 25%;*/
 }
 
 
