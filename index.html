@@ -6,6 +6,7 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> <!--Twitter css-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
+    <script src="jquery-3.2.0.min.js"></script>
     <script src="jqfloat.js"></script>
     <script src="interact.js"></script>
     <script src="script.js"></script>
@@ -14,10 +15,12 @@
 
 </head>
 <body>
-    <main>
-        <div id="map"></div>
-        <div id="bubble" class="draggable">Trump</div>
-    </main>
+
+    <div id="map"></div>
+    <div id="bubble-container">
+        <!-- <div id="bubble" class="draggable">Trump</div> -->
+    </div>
+
 
     <script src="map.js"></script>
 </body>
