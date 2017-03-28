@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from flask import Flask, render_template, request, jsonify
+from multiprocessing import Process
 import tweepy
 from tweepy import Stream
 from tweepy import OAuthHandler
@@ -11,6 +13,7 @@ from geojson import Feature, Point, FeatureCollection
 import sys
 
 #Initializing our keys and secrets for authentication
+app = Flask(__name__)
 
 consumer_key = '7PIDujS6A8ZsxgGbYIowfOL1s'
 consumer_secret = 'QlKKNvIAR9mFqJRHM8JXaJbJ2VvISOcAZQeb5Zjd4scirmiXBh'
@@ -37,6 +40,7 @@ features=[]
 class Listener(StreamListener):
     def __init__(self, path='tweets_collected.json'):
         self.path = path
+        self.features = []
 
     def on_data(self, data):
 
@@ -57,8 +61,8 @@ class Listener(StreamListener):
                 coordinates.append(location.latitude)
                 temp = {'type': "Feature" , 'properties': {'opinion': 'positive', 'id': str(j['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print temp
-                features.append(temp)
-                collection = {'type': "FeatureCollection", 'features': features}
+                self.features.append(temp)
+                collection = {'type': "FeatureCollection", 'features': self.features}
 
                 savefile = open(self.path, 'w')
                 savefile.write(json.dumps(collection))

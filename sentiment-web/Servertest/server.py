@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from twitters import features, twitterStream
+from twitters import twitterStream
 from multiprocessing import Process
 import sys
 
@@ -12,8 +12,8 @@ def index():
 @app.route('/process', methods = ['POST'])
 def process():
     print "HEY"
-    reload(features)
-    return jsonify({'features': features})
+    print twitterStream.listener.features
+    return jsonify({'features': twitterStream.listener.features})
 
 def func1():
     print "Twitter started"
