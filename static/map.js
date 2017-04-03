@@ -60,9 +60,14 @@ addTweet("neutral", "Här är en neutral tweet", [76, 54]);*/
 //Load map with source and layers
 map.on("load", function() {
     //Add a source with tweets
+  window.setInterval(function()
+  {
+    map.getSource("tweets").setData({"type": "FeatureCollection", "features": collection.features});
+    console.log("updated data");
+  }, 100);
     map.addSource("tweets", {
         "type": "geojson",
-        "data": "tweets_collected.json"/*{
+        "data": {"type": "FeatureCollection", "features": collection.features}/*{
         "type": "FeatureCollection",
             "features": tweetsData
     }
@@ -128,7 +133,22 @@ map.on('mousemove', function (e) {
 
 
 //document.body.onLoad = function () {
+/*
+    for (i = 0; i < 10; i++)
+    {
+        var temp = document.createElement("div");
 
+        temp.id = "bubble" + i;
+        temp.className = "draggable";
+        temp.innerHTML = "TuesdayMotivation";
+        //temp.onclick = expandDiv();
+        //temp.style.left = '45vw';
+        //temp.style.top = '50vh';
+
+
+        document.getElementById("bubble-container").appendChild(temp);
+    }
+    */
 //}
 
 

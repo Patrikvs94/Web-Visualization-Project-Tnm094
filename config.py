@@ -1,0 +1,7 @@
+CONF = {
+    "APP_KEY": "7PIDujS6A8ZsxgGbYIowfOL1s",
+    "APP_SECRET": "QlKKNvIAR9mFqJRHM8JXaJbJ2VvISOcAZQeb5Zjd4scirmiXBh",
+    "OAUTH_TOKEN": "828544457918267393-6uopKW9Ztef0jZ2i6FDMQkwg0mNq178",
+    "OAUTH_TOKEN_SECRET": "rqp7ozjS3xknZlIrZMSqKpJH97lkmfuJm86prcPTfNYi0",
+    "KEYWORD": "#cats"
+}
