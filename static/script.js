@@ -91,7 +91,7 @@ $(document).ready(function() {
     socket.on('tweet', function(msg) {
       if (collection.features.length > 200)
         collection.features.shift();
-      collection.features.push(msg);
+        collection.features.push(msg);
       });
 
       //Get trending tweets

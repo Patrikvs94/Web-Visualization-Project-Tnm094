@@ -55,7 +55,7 @@ class TwitterWatchDog:
             self.__init__()
 
 
-dog = TwitterWatchDog("cat")
+dog = TwitterWatchDog("cats")
 trends = twitter.get_place_trends(id=1)[0]['trends']
 #for trend in trends:
     #print urllib.unquote(urllib.unquote(trend['query']))
@@ -78,8 +78,6 @@ def process():
 #    print('Hej vi kommer in i trends funnktionen')
 #    uid = request.namespace.socket.sessid
 #    print('Client %s connected %s (trends)' % uid)
-#    emit('trends', trends, broadcast=True)
-
 
 @socketio.on('connect', namespace='/tweets')
 def tweets_connect():

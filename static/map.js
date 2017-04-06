@@ -63,7 +63,7 @@ map.on("load", function() {
   window.setInterval(function()
   {
     map.getSource("tweets").setData({"type": "FeatureCollection", "features": collection.features});
-    console.log("updated data");
+    //console.log("updated data");
   }, 100);
     map.addSource("tweets", {
         "type": "geojson",
