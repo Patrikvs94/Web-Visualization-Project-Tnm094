@@ -55,10 +55,10 @@ class TwitterWatchDog:
             self.__init__()
 
 
-dog = TwitterWatchDog("#BudgetCelebs")
+dog = TwitterWatchDog("cat")
 trends = twitter.get_place_trends(id=1)[0]['trends']
-for trend in trends:
-    print urllib.unquote(urllib.unquote(trend['query']))
+#for trend in trends:
+    #print urllib.unquote(urllib.unquote(trend['query']))
 
 
 @app.route('/')
@@ -72,12 +72,21 @@ def process():
     print subject
     return jsonify({'message': 'python halsar ' + subject})
 
+#send trending tweets to javascript
+#socketio.on('connect', namespace='/trends')
+#def trends_connect():
+#    print('Hej vi kommer in i trends funnktionen')
+#    uid = request.namespace.socket.sessid
+#    print('Client %s connected %s (trends)' % uid)
+#    emit('trends', trends, broadcast=True)
+
 
 @socketio.on('connect', namespace='/tweets')
 def tweets_connect():
     dog.check_alive()
     uid = request.namespace.socket.sessid
     print('Client %s connected' % uid)
+    emit('trends', trends, broadcast=True)
     while True:
         try:
             tweet = dog.streamer.queue.get(timeout=5)

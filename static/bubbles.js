@@ -5,8 +5,8 @@ function changefilter(value) {
     document.getElementById("blurmap").setAttribute("style", "-ms-filter: blur(" + value + "px)");
     document.getElementById("blurmap").setAttribute("style", "filter: blur(" + value + "px)");
 
-
-    /*if(value === 0)
+/*
+    if(value === 0)
     {
         document.getElementById("bubble-container").setAttribute("style", "height:" + 7 + "vh");
         document.getElementById("bubble-container").setAttribute("style", "width:" + 100 + "%");
@@ -24,22 +24,22 @@ function changefilter(value) {
     }*/
 }
 
-for (i = 0; i < 10; i++)
+/*for (i = 0; i < 10; i++)
 {
     var temp = document.createElement("div");
 
     temp.id = "bubble" + i;
     temp.className = "draggable";
-    temp.innerHTML = trenddata.trends[i].name;
+    temp.innerHTML = trenddata[i].name;
     temp.onclick = changefilter(0);
     //temp.style.left = '45vw';
     //temp.style.top = '50vh';
 
 
     document.getElementById("bubble-container").appendChild(temp);
-}
+}*/
 
-$(function()
+/*$(function()
 {
     var expanded = false;
     $('.draggable').click(function()
@@ -57,4 +57,4 @@ $(function()
         $(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
 
     });
-});
+});*/
