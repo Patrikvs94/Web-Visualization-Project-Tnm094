@@ -4,7 +4,7 @@ monkey.patch_all()
 
 import gevent
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask.ext.socketio import SocketIO, emit
 from twython import TwythonStreamer, Twython
 from geopy.geocoders import Nominatim
@@ -16,6 +16,7 @@ import urllib
 twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'], oauth_version=2)
 ACCESS_TOKEN = twitter.obtain_access_token()
 twitter = Twython(CONF['APP_KEY'], access_token=ACCESS_TOKEN)
+
 
 app = Flask(__name__)
 app.debug = True
@@ -64,6 +65,12 @@ for trend in trends:
 def index():
     dog.check_alive()
     return render_template('index.html')
+
+@app.route('/process', methods = ['POST'])
+def process():
+    subject = request.form['message'];
+    print subject
+    return jsonify({'message': 'python halsar ' + subject})
 
 
 @socketio.on('connect', namespace='/tweets')

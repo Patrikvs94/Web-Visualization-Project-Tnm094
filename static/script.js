@@ -75,3 +75,45 @@ function dragMoveListener (event) {
 
 // this is used later in the resizing and gesture demos
 window.dragMoveListener = dragMoveListener;
+
+//retrieve twitter data from python
+$(document).ready(function() {
+
+  collection = {type :"FeatureCollection", features: [] };
+
+    namespace = '/tweets'; // change to an empty string to use the global namespace
+
+    // the socket.io documentation recommends sending an explicit package upon connection
+    // this is specially important when using the global namespace
+    var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
+
+    // event handler for server sent data
+    // the data is displayed in the "Received" section of the page
+    socket.on('tweet', function(msg) {
+      if (collection.features.length > 200)
+        collection.features.shift();
+      collection.features.push(msg);
+    });
+
+
+//retrieve data from python and send data to python 
+  $('.draggable').click(function(event)
+  {
+    $.ajax({
+      async: true,
+      data : {
+        message : $(this).text()
+      },
+      type : 'POST',
+      url : '/process'
+    })
+    .done(function(data)
+    {
+      subject = data.message;
+      console.log(subject);
+    });
+
+  event.preventDefault();
+  });
+
+});
