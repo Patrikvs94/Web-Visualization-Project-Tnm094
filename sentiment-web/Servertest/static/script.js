@@ -1,17 +1,19 @@
 $(document).ready(function() {
 
-$('form').on('submit', function(event)
+$('.text').click(function(event)
 {
   $.ajax({
+    async: true,
     data : {
-      message : "HEYY"
+      message : $(this).text()
     },
     type : 'POST',
     url : '/process'
   })
   .done(function(data)
   {
-    $('#text').text(data.message);
+    subject = data.message;
+    console.log(subject);
   });
 
 event.preventDefault();
