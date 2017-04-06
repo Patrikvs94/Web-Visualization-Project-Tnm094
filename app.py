@@ -6,9 +6,16 @@ import gevent
 import os
 from flask import Flask, render_template, request
 from flask.ext.socketio import SocketIO, emit
-from twython import TwythonStreamer
+from twython import TwythonStreamer, Twython
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
 from geojson import Feature, Point, FeatureCollection
+from config import CONF
+import urllib
+
+twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'], oauth_version=2)
+ACCESS_TOKEN = twitter.obtain_access_token()
+twitter = Twython(CONF['APP_KEY'], access_token=ACCESS_TOKEN)
 
 app = Flask(__name__)
 app.debug = True
@@ -16,7 +23,6 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 port = int(os.getenv('VCAP_APP_PORT', 5000))
 
-from config import CONF
 
 class TwitterStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
@@ -48,7 +54,10 @@ class TwitterWatchDog:
             self.__init__()
 
 
-dog = TwitterWatchDog("cat")
+dog = TwitterWatchDog("#BudgetCelebs")
+trends = twitter.get_place_trends(id=1)[0]['trends']
+for trend in trends:
+    print urllib.unquote(urllib.unquote(trend['query']))
 
 
 @app.route('/')
