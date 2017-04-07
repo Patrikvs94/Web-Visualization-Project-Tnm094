@@ -9,7 +9,7 @@ var map = new mapboxgl.Map({
 });
 
 
-var colors = [["positive", "green"],["negative", "red"], ["neutral", "yellow"]];
+var colors = [["Positive", "green"],["Negative", "red"], ["Neutral", "yellow"]];
 
 
 /* BEHÖVS INTE OM VI LÄSER DIREKT FRÅN JSON-FIL
@@ -97,7 +97,7 @@ map.on("load", function() {
 // When a click event occurs near a place, open a popup at the location of
 // the feature, with description HTML from its properties.
 map.on('click', function (e) {
-    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionispositive", "opinionisnegative", "opinionisneutral"] });
+    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
 
     if (!features.length) {
         return;
@@ -127,7 +127,7 @@ map.on('click', function (e) {
 // Use the same approach as above to indicate that the symbols are clickable
 // by changing the cursor style to 'pointer'.
 map.on('mousemove', function (e) {
-    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionispositive", "opinionisnegative", "opinionisneutral"] });
+    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 });
 

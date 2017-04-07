@@ -12,6 +12,9 @@ from geopy.exc import GeocoderTimedOut
 from geojson import Feature, Point, FeatureCollection
 from config import CONF
 import urllib
+import requests
+
+sentiment_url = 'http://sentiment.vivekn.com/api/text/'
 
 twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'], oauth_version=2)
 ACCESS_TOKEN = twitter.obtain_access_token()
@@ -103,8 +106,14 @@ def tweets_connect():
                     coordinates = []
                     coordinates.append(location.longitude)
                     coordinates.append(location.latitude)
-                    temp = {'type': "Feature" , 'properties': {'opinion': 'positive', 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                    print tweet['text']
+                    # ordanalys
+                    payload = {'txt': tweet['text']}
+                    r = requests.post(sentiment_url, data=payload)
+                    # print r.json()['result']['sentiment']
+                    temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                    #print tweet['text']
+                    # för att det ska funka på windows
+                    print tweet['text'].encode('cp850', errors='replace')
                     emit('tweet', temp, broadcast=True)
 
 
