@@ -95,7 +95,10 @@ def tweets_connect():
             if place is not None:
                 encodedPlace = place.encode("utf-8", errors='ignore')
                 geolocator = Nominatim()
-                location = geolocator.geocode(encodedPlace.decode("utf-8"))
+                try:
+                    location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
+                except GeocoderTimedOut as e:
+                    print("Error: geocode failed on input %s with message %s"%(location, e.msg))
                 if location is not None:
                     coordinates = []
                     coordinates.append(location.longitude)
