@@ -112,7 +112,6 @@ def collect_tweets_data(sub):
                     socketio.emit('tweet', temp, namespace='/tweets')
     print sub + ' is no longer the subject'
 
-
 @socketio.on('connect', namespace='/tweets')
 def tweets_connect():
     #dog.check_alive()
@@ -125,9 +124,6 @@ def tweets_disconnect():
     #dog.check_alive()
     uid = request.namespace.socket.sessid
     print('Client %s disconnected' % uid)
-
-
-
 
 if __name__ == '__main__':
     try:
