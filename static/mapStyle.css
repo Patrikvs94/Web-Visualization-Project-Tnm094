@@ -19,7 +19,7 @@ body {
 }
 
 
-.draggable
+.floatable
 {
     margin: 7px;
     float: left;
@@ -34,7 +34,6 @@ body {
     background-color: #00aced;
     /*background-image: linear-gradient(bottom, rgb(182, 21, 34) 0%, rgb(0, 172, 237) 100%);*/
     background-image: -webkit-linear-gradient(top, rgba(0, 172, 237, 0.75), rgba(32, 197, 255, 0.65));
-    border-radius: 20px;
     box-shadow: inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999;
     border-radius: 15px;
 
