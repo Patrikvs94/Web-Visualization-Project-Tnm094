@@ -52,64 +52,80 @@ class TwitterWatchDog:
             self.streamer.disconnect()
             self.green.kill()
             # then reload
-            self.__init__()
+            self.__init__("cats")
 
 
-dog = TwitterWatchDog("cats")
 trends = twitter.get_place_trends(id=1)[0]['trends']
 #for trend in trends:
     #print urllib.unquote(urllib.unquote(trend['query']))
-
+subject = ''
 
 @app.route('/')
 def index():
-    dog.check_alive()
     return render_template('index.html')
 
 @app.route('/process', methods = ['POST'])
 def process():
-    subject = request.form['message'];
-    print subject
-    return jsonify({'message': 'python halsar ' + subject})
+    global subject
+    subject = request.form['message']
+    print subject + 'has been clicked /Python'
+    collect_tweets_data(subject)
+    print 'collect_tweets_data() funkar'
+    return jsonify({'message': subject})
 
-#send trending tweets to javascript
-#socketio.on('connect', namespace='/trends')
-#def trends_connect():
-#    print('Hej vi kommer in i trends funnktionen')
-#    uid = request.namespace.socket.sessid
-#    print('Client %s connected %s (trends)' % uid)
 
-@socketio.on('connect', namespace='/tweets')
-def tweets_connect():
+def collect_tweets_data(sub):
+    dog = TwitterWatchDog(sub)
     dog.check_alive()
-    uid = request.namespace.socket.sessid
-    print('Client %s connected' % uid)
-    emit('trends', trends, broadcast=True)
-    while True:
+    print 'subject = ' + subject
+    print 'sub = ' + sub
+    while sub == subject:
         try:
+            print('try')
             tweet = dog.streamer.queue.get(timeout=5)
         except gevent.queue.Empty:
+            print('except')
             dog.check_alive()
         else:
+            print('else')
             place = tweet['user']['location']
             if place is not None:
                 encodedPlace = place.encode("utf-8", errors='ignore')
                 geolocator = Nominatim()
-                location = geolocator.geocode(encodedPlace.decode("utf-8"))
+                try:
+                    location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
+                except GeocoderTimedOut as e:
+                    print("Error: geocode failed on input %s with messafe %s"%(location, e.msg))
                 if location is not None:
                     coordinates = []
                     coordinates.append(location.longitude)
                     coordinates.append(location.latitude)
                     temp = {'type': "Feature" , 'properties': {'opinion': 'positive', 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                     print tweet['text']
-                    emit('tweet', temp, broadcast=True)
+                    socketio.emit('tweet', temp, namespace='/tweets')
+    print sub + ' is no longer the subject'
+
+#@socketio.on('trend', namespace='/tweets')
+#def tweets_collect(sub):
+#    print sub
+
+
+@socketio.on('connect', namespace='/tweets')
+def tweets_connect():
+    #dog.check_alive()
+    uid = request.namespace.socket.sessid
+    print('Client %s connected' % uid)
+    emit('trends', trends, broadcast=True)
+
 
 
 @socketio.on('disconnect', namespace='/tweets')
 def tweets_disconnect():
-    dog.check_alive()
+    #dog.check_alive()
     uid = request.namespace.socket.sessid
     print('Client %s disconnected' % uid)
+
+
 
 
 if __name__ == '__main__':
