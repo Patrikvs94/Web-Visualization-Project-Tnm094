@@ -1,33 +1,24 @@
-//Provar att lägga till en kommentar
 //Load map
+var bounds = [
+    [-180, -60], // Southwest coordinates
+    [180, 80    ]  // Northeast coordinates
+];
+
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiamFza2E3MjQiLCJhIjoiY2l6Z3JucDF2MDAxZTMzdGY5ZDY1dTdpcSJ9.ke-er3jChidKw_FqDcFK7Q';
 var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/jaska724/cizxw3qje008l2ro4hjz42as6', //stylesheet location
     center: [0, 50], // starting position
-    zoom: 1 // starting zoom
+    zoom: 1, // starting zoom
+    maxBounds: bounds
 });
 
 
 var colors = [["Positive", "green"],["Negative", "red"], ["Neutral", "yellow"]];
 
 
-/* BEHÖVS INTE OM VI LÄSER DIREKT FRÅN JSON-FIL
-//Array with the information about the tweet to place a marker
-var tweetsData = [
-    { //first marker
-        "type": "Feature",
-        "properties": {
-            "opinion": "positive",
-            "description": "<p>Här är ett positivt tweet</p>"
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [16.192421, 58.587745]
-        }
-    }
-];
-
+/*
 //Function that adds tweets to tweetsData
 function addTweet(opinion, description, coordinates){
 
@@ -54,7 +45,8 @@ addTweet("negative", '<img src="https://g.twimg.com/about/feature-corporate/imag
     '<a href="https://twitter.com/hashtag/nature?src=hash">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash">' +
     '#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Dept of Interior ' +
     '(@Interior) <a href="https://twitter.com/Interior/status/463440424141459456">May 5, 2014</a></blockquote>', [-45, 67] );
-addTweet("neutral", "Här är en neutral tweet", [76, 54]);*/
+addTweet("neutral", "Här är en neutral tweet", [76, 54]);
+*/
 
 
 //Load map with source and layers
@@ -130,58 +122,3 @@ map.on('mousemove', function (e) {
     var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 });
-
-
-//document.body.onLoad = function () {
-/*
-    for (i = 0; i < 10; i++)
-    {
-        var temp = document.createElement("div");
-
-        temp.id = "bubble" + i;
-        temp.className = "draggable";
-        temp.innerHTML = "TuesdayMotivation";
-        //temp.onclick = expandDiv();
-        //temp.style.left = '45vw';
-        //temp.style.top = '50vh';
-
-
-        document.getElementById("bubble-container").appendChild(temp);
-    }
-    */
-//}
-
-
-/***
- *Dessa har ej testats ordentligt
- */
-/*function expandDiv() {
-    var temp = document.getElementById("bubble-container");
-    temp.style.width = '100vw';
-    temp.style.height = '100vh';
-    temp.style.top = '0';
-    temp.style.left = '0';
-
-
-}*/
-
-/*function makeNewPosition(){
-
-    // Get viewport dimensions (remove the dimension of the div)
-    var h = $(window).height() - 50;
-    var w = $(window).width() - 50;
-
-    var nh = Math.floor(Math.random() * h);
-    var nw = Math.floor(Math.random() * w);
-
-    return [nh,nw];
-
-}
-
-function animateDiv(){
-    var newq = makeNewPosition();
-    $('.a').animate({ top: newq[0], left: newq[1] }, function(){
-        animateDiv();
-    });
-
-};*/
