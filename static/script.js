@@ -154,7 +154,6 @@ $(document).ready(function() {
                     console.log(subject + ' has been clicked /ajax');
                   });
 
-
                 event.preventDefault();
 
                 });

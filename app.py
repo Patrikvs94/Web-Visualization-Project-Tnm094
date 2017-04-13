@@ -12,6 +12,9 @@ from geopy.exc import GeocoderTimedOut
 from geojson import Feature, Point, FeatureCollection
 from config import CONF
 import urllib
+import requests
+
+sentiment_url = 'http://sentiment.vivekn.com/api/text/'
 
 twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'], oauth_version=2)
 ACCESS_TOKEN = twitter.obtain_access_token()
@@ -95,19 +98,19 @@ def collect_tweets_data(sub):
                 try:
                     location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
                 except GeocoderTimedOut as e:
-                    print("Error: geocode failed on input %s with messafe %s"%(location, e.msg))
+                    print("Error: geocode failed on input %s with message %s"%(location, e.msg))
                 if location is not None:
                     coordinates = []
                     coordinates.append(location.longitude)
                     coordinates.append(location.latitude)
-                    temp = {'type': "Feature" , 'properties': {'opinion': 'positive', 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                    print tweet['text']
+                    # ordanalys
+                    payload = {'txt': tweet['text']}
+                    r = requests.post(sentiment_url, data=payload)
+                    # print r.json()['result']['sentiment']
+                    temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                    print tweet['text'].encode('cp850', errors='replace')
                     socketio.emit('tweet', temp, namespace='/tweets')
     print sub + ' is no longer the subject'
-
-#@socketio.on('trend', namespace='/tweets')
-#def tweets_collect(sub):
-#    print sub
 
 
 @socketio.on('connect', namespace='/tweets')
@@ -116,8 +119,6 @@ def tweets_connect():
     uid = request.namespace.socket.sessid
     print('Client %s connected' % uid)
     emit('trends', trends, broadcast=True)
-
-
 
 @socketio.on('disconnect', namespace='/tweets')
 def tweets_disconnect():
