@@ -1,6 +1,6 @@
 //Load map
 var bounds = [
-    [-180, -60], // Southwest coordinates
+    [-170, -60], // Southwest coordinates
     [180, 80    ]  // Northeast coordinates
 ];
 

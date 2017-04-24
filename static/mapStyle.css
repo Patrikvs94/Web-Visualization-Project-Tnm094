@@ -1,14 +1,31 @@
 body {
     margin:0;
     padding:0;
-    font-family: 'Gotham';
+}
+
+h1 {
+  font-family: Gotham-Bold;
+
+}
+
+@font-face {
+  font-family: Gotham-Light;
+  src: url(fonts/Gotham-Light.otf);
+}
+
+@font-face {
+  font-family: Gotham-Bold;
+  src: url(fonts/Gotham-Bold.otf);
 }
 
 #map {
-    position:absolute;
+    position: absolute;
     top:0;
     bottom:0;
-    width:100%;
+    height: 100%;
+    width:80%;
+    left: 0px;
+    display: block;
 }
 
 #bubble-container {
@@ -20,16 +37,13 @@ body {
 }
 
 #menu {
-    height: 80%;
+    height: 100%;
     width: 20%;
     background-color: white;
-    z-index: 2;
     position: absolute;
-    margin-left: 2%;
-    margin-top: 2%;
-    border-color: #42adf4;
-    border-width: 2px;
-    border-style: solid;
+    right: 0px;
+    font-family: Gotham-Light;
+    padding-left: 15px;
 }
 
 
