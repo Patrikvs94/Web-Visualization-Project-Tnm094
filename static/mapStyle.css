@@ -5,6 +5,8 @@ body {
 
 h1 {
   font-family: Gotham-Bold;
+  margin: 10px;
+  color: white;
 
 }
 
@@ -22,8 +24,8 @@ h1 {
     position: absolute;
     top:0;
     bottom:0;
-    height: 100%;
-    width:80%;
+    height: 100vh;
+    width:80vw;
     left: 0px;
     display: block;
 }
@@ -37,17 +39,30 @@ h1 {
 }
 
 #menu {
-    height: 100%;
-    width: 20%;
-    background-color: white;
+    width: 20vw;
+    height: 100vh;
+    background-color: #c1d7e2;
     position: absolute;
     right: 0px;
     font-family: Gotham-Light;
-    padding-left: 15px;
+    box-shadow: -1px 0px 5px;
+
+}
+
+.bubbles {
+  margin: 10px;
+  text-align:center;
+  cursor: pointer;
+  padding: 10px;
+  position: relative;
+  background-color: #edeef9;
+  display: inline-block;
+  font-size: 12px;
 }
 
 
-.floatable
+
+/*.floatable
 {
     margin: 7px;
     float: left;
@@ -74,7 +89,7 @@ h1 {
     -moz-animation-iteration-count: infinite;
     -moz-animation-timing-function: ease-in-out;
 
-}
+}*/
 
 
 

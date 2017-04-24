@@ -48,12 +48,12 @@ $(document).ready(function() {
           var temp = document.createElement("div");
 
           temp.id = "bubble" + i;
-          temp.className = "floatable";
+          temp.className = "bubbles";
           temp.innerHTML = trenddata[i].name;
           temp.onclick = changefilter(0);
           //temp.style.left = '45vw';
           //temp.style.top = '50vh';
-          document.getElementById("bubble-container").appendChild(temp);
+          document.getElementById("menu").appendChild(temp);
         }
 
         //On start make map blurry
@@ -62,7 +62,7 @@ $(document).ready(function() {
         $(function(){
             var expanded = false;
             //When bubbles are clicked
-            $('.floatable').click(function()
+            $('.bubbles').click(function()
             {
               console.log(collection.features);
 
@@ -74,8 +74,8 @@ $(document).ready(function() {
                     expanded = true;
                     changefilter(0);
                 }
-                $(".floatable").css('box-shadow', 'inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999');
-                $(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
+                //$(".bubbles").css('box-shadow', 'inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999');
+                //$(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
 
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
