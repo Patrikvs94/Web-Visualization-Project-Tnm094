@@ -55,7 +55,8 @@ class TwitterWatchDog:
             self.streamer.disconnect()
             self.green.kill()
             # then reload
-            self.__init__("cats")
+            print "-------> entering dog !!!!!!!!!"
+            self.__init__(subject)
 
 
 trends = twitter.get_place_trends(id=1)[0]['trends']

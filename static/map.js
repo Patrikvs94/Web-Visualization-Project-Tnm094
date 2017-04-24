@@ -98,9 +98,6 @@ map.on('click', function (e) {
 
     var feature = features[0];
 
-
-
-
     // Populate the popup and set its coordinates
     // based on the feature found.
     var popup = new mapboxgl.Popup()

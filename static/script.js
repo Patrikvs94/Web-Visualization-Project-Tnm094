@@ -57,7 +57,7 @@ $(document).ready(function() {
         }
 
         //On start make map blurry
-        changefilter(5);
+        //changefilter(5);
 
         $(function(){
             var expanded = false;
@@ -65,7 +65,6 @@ $(document).ready(function() {
             $('.floatable').click(function()
             {
               console.log(collection.features);
-              collection.features = [];
 
                 //Mark clicked bubble and move bubbles to top
                 if (!expanded){
@@ -78,8 +77,9 @@ $(document).ready(function() {
                 $(".floatable").css('box-shadow', 'inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999');
                 $(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
 
-                console.log('//' + document.domain + ':' + location.port + namespace);
 
+                console.log('//' + document.domain + ':' + location.port + namespace);
+                collection.features = [];
 
                 //Retrieve data from python and send data to python
                 $.ajax({
