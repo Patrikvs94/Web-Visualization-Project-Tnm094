@@ -97,19 +97,25 @@ def collect_tweets_data(sub):
                 geolocator = Nominatim()
                 try:
                     location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
+
+                    if location is not None:
+                        coordinates = []
+                        coordinates.append(location.longitude)
+                        coordinates.append(location.latitude)
+                        # ordanalys
+                        payload = {'txt': tweet['text']}
+                        r = requests.post(sentiment_url, data=payload)
+                        print r.json()['result']['confidence']
+                        print r.json()['result']['sentiment']
+                        if r.json()['result']['confidence'] < 95:
+                            r.json()['result']['sentiment'] = "Neutral"
+                        temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                        print tweet['text'].encode('cp850', errors='replace')
+                        socketio.emit('tweet', temp, namespace='/tweets')
+
                 except GeocoderTimedOut as e:
-                    print("Error: geocode failed on input %s with message %s"%(location, e.msg))
-                if location is not None:
-                    coordinates = []
-                    coordinates.append(location.longitude)
-                    coordinates.append(location.latitude)
-                    # ordanalys
-                    payload = {'txt': tweet['text']}
-                    r = requests.post(sentiment_url, data=payload)
-                    # print r.json()['result']['sentiment']
-                    temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                    print tweet['text'].encode('cp850', errors='replace')
-                    socketio.emit('tweet', temp, namespace='/tweets')
+                    print("Error: geocode failed")
+                
     print sub + ' is no longer the subject'
 
 @socketio.on('connect', namespace='/tweets')

@@ -5,10 +5,10 @@ var bounds = [
 ];
 
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiamFza2E3MjQiLCJhIjoiY2l6Z3JucDF2MDAxZTMzdGY5ZDY1dTdpcSJ9.ke-er3jChidKw_FqDcFK7Q';
+mapboxgl.accessToken = 'pk.eyJ1Ijoic292YW5ueSIsImEiOiJjaXpnc3YxYTAwMDI0MzNvMzI0am13cmNuIn0.nXZ_-XK8THtmYTIQosey1w';
 var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/jaska724/cizxw3qje008l2ro4hjz42as6', //stylesheet location
+    style: 'mapbox://styles/sovanny/cizgswpga00to2sqz9xcdew48', //stylesheet location
     center: [0, 50], // starting position
     zoom: 1, // starting zoom
     maxBounds: bounds
@@ -73,6 +73,7 @@ map.on("load", function() {
             "type": "circle",
             "source":"tweets",
             "paint": {
+                "circle-radius": 10,
                 "circle-color": colors[1],
                 "circle-opacity": 0.5,
                 "circle-blur": 0.5
