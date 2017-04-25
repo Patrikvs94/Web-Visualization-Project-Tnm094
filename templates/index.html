@@ -7,7 +7,7 @@
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> <!--Twitter css-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
     <script src="static/jquery-3.2.0.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script src="static/jqfloat.js"></script>
     <script src="static/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -27,7 +27,12 @@
             <!-- the trigger element for the dialog box-->
             <a href="#" id="dialog-trigger">Trigger Dialog!</a>
 
+            <div class='session' id='sliderbar'>
+                <h2>Minute: <label id='active-hour'>12PM</label></h2>
+                <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
+            </div>
         </div>
+
     </div><!--wrapper-->
 
     <!--<div id="bubble-container">
@@ -37,10 +42,6 @@
         </nobr>
     </div>
     </div>-->
-    <div class='session' id='sliderbar'>
-        <h2>Minute: <label id='active-hour'>12PM</label></h2>
-        <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
-      </div>
 
     <!-- the dialog box -->
     <div id="dialog-box" class="dialog-box">
