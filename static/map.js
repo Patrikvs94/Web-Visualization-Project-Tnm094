@@ -16,6 +16,7 @@ var map = new mapboxgl.Map({
 
 
 var colors = [["Positive", "green"],["Negative", "red"], ["Neutral", "yellow"]];
+var times = ["live"];
 
 
 /*

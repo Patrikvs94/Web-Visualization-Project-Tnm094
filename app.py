@@ -16,9 +16,7 @@ import requests
 
 sentiment_url = 'http://sentiment.vivekn.com/api/text/'
 
-twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'], oauth_version=2)
-ACCESS_TOKEN = twitter.obtain_access_token()
-twitter = Twython(CONF['APP_KEY'], access_token=ACCESS_TOKEN)
+twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'],CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])
 
 
 app = Flask(__name__)
@@ -72,12 +70,13 @@ def process():
     global subject
     subject = request.form['message']
     print subject + 'has been clicked /Python'
-    collect_tweets_data(subject)
+    collect_tweets_data_stream(subject)
+    #collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
 
-def collect_tweets_data(sub):
+def collect_tweets_data_stream(sub):
     dog = TwitterWatchDog(sub)
     dog.check_alive()
     print 'subject = ' + subject
@@ -91,39 +90,73 @@ def collect_tweets_data(sub):
             dog.check_alive()
         else:
             print('else')
-            place = tweet['user']['location']
-            if place is not None:
-                encodedPlace = place.encode("utf-8", errors='ignore')
-                geolocator = Nominatim()
-                try:
-                    location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
-                except GeocoderTimedOut as e:
-                    print("Error: geocode failed on input %s with message %s"%(location, e.msg))
-                if location is not None:
-                    coordinates = []
-                    coordinates.append(location.longitude)
-                    coordinates.append(location.latitude)
-                    # ordanalys
-                    payload = {'txt': tweet['text']}
-                    r = requests.post(sentiment_url, data=payload)
-                    # print r.json()['result']['sentiment']
-                    temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                    print tweet['text'].encode('cp850', errors='replace')
-                    socketio.emit('tweet', temp, namespace='/tweets')
+            tweet_location = tweet_has_location(tweet)
+            if tweet_location['exist']:
+                coordinates = []
+                coordinates.append(tweet_location['longitude'])
+                coordinates.append(tweet_location['latitude'])
+                # ordanalys
+                payload = {'txt': tweet['text']}
+                r = requests.post(sentiment_url, data=payload)
+                # print r.json()['result']['sentiment']
+                temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                print tweet['text'].encode('cp850', errors='replace')
+                socketio.emit('tweet', temp, namespace='/tweets')
     print sub + ' is no longer the subject'
+
+def collect_tweets_data_rest(sub):
+    query = sub + ' filter:safe'
+    results = twitter.cursor(twitter.search, q=query, result_type='recent', count='100')
+    counter =0
+    while counter < 2000:
+        for tweet in results:
+            tweet_location = tweet_has_location(tweet)
+            if tweet_location['exist']:
+                #print tweet['created_at']
+                #print tweet['text']
+                #print counter
+                coordinates = []
+                coordinates.append(tweet_location['longitude'])
+                coordinates.append(tweet_location['latitude'])
+                # ordanalys
+                payload = {'txt': tweet['text']}
+                r = requests.post(sentiment_url, data=payload)
+                # print r.json()['result']['sentiment']
+                temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                #print tweet['text'].encode('cp850', errors='replace')
+                socketio.emit('tweet', temp, namespace='/tweets')
+            counter =counter+1;
+            if counter%100==0:
+                break
+        results = twitter.cursor(twitter.search, q=query, result_type='recent', count='100', max_id=tweet['id'])
+
+
+def tweet_has_location(tweet):
+    place = tweet['user']['location']
+    if place is not None:
+        encodedPlace = place.encode("utf-8", errors='ignore')
+        geolocator = Nominatim()
+        try:
+            location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
+        except GeocoderTimedOut as e:
+            print("Error: geocode failed on input %s with message %s"%(location, e.msg))
+        if location is not None:
+            return {'exist': True, 'longitude': location.longitude, 'latitude': location.latitude}
+    return {'exist': False}
+
 
 @socketio.on('connect', namespace='/tweets')
 def tweets_connect():
     #dog.check_alive()
-    uid = request.namespace.socket.sessid
-    print('Client %s connected' % uid)
+    #uid = request.namespace.socket.sessid
+    print('Client connected')
     emit('trends', trends, broadcast=True)
 
 @socketio.on('disconnect', namespace='/tweets')
 def tweets_disconnect():
     #dog.check_alive()
-    uid = request.namespace.socket.sessid
-    print('Client %s disconnected' % uid)
+    #uid = request.namespace.socket.sessid
+    print('Client disconnected')
 
 if __name__ == '__main__':
     try:
