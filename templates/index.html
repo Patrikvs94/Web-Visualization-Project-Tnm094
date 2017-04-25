@@ -16,22 +16,37 @@
 
 </head>
 <body>
+    <div class="wrapper"><!-- all elements goes in wrapper-->
+        <div id="blurmap">
+            <div id="map"></div>
+        </div>
+        <div id="menu"> <h1>Twiz</h1>
+            <p>Trending subjects:</p>
+            <ul id="menu-list"></ul>
 
-    <div id="blurmap">
-        <div id="map"></div>
-    </div>
+            <!-- the trigger element for the dialog box-->
+            <a href="#" id="dialog-trigger">Trigger Dialog!</a>
 
-    <div id="bubble-container">
+        </div>
+    </div><!--wrapper-->
+
+    <!--<div id="bubble-container">
         <nobr title="New" class="testClass">
             <h1 id="starttext">Här är en text till startsidan</h1>
             <h3> Här är en mindre text till startsidan</h3>
         </nobr>
-        <div class='session' id='sliderbar'>
-            <h2>Minute: <label id='active-hour'>12PM</label></h2>
-            <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
-          </div>
     </div>
+    </div>-->
+    <div class='session' id='sliderbar'>
+        <h2>Minute: <label id='active-hour'>12PM</label></h2>
+        <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
+      </div>
 
+    <!-- the dialog box -->
+    <div id="dialog-box" class="dialog-box">
+        <h3>Dialog Box!</h3> <a href="#" id="close" class="close">Close</a>
+        <p> Your content goes here</p>
+    </div>
 
     <script src="static/map.js"></script>
     <script src="static/bubbles.js"></script>

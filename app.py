@@ -53,7 +53,8 @@ class TwitterWatchDog:
             self.streamer.disconnect()
             self.green.kill()
             # then reload
-            self.__init__("cats")
+            print "-------> entering dog !!!!!!!!!"
+            self.__init__(subject)
 
 
 trends = twitter.get_place_trends(id=1)[0]['trends']
@@ -98,6 +99,10 @@ def collect_tweets_data_stream(sub):
                 # ordanalys
                 payload = {'txt': tweet['text']}
                 r = requests.post(sentiment_url, data=payload)
+                print r.json()['result']['confidence']
+                print r.json()['result']['sentiment']
+                if r.json()['result']['confidence'] < 95:
+                    r.json()['result']['sentiment'] = "Neutral"
                 # print r.json()['result']['sentiment']
                 temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print tweet['text'].encode('cp850', errors='replace')
@@ -139,7 +144,7 @@ def tweet_has_location(tweet):
         try:
             location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
         except GeocoderTimedOut as e:
-            print("Error: geocode failed on input %s with message %s"%(location, e.msg))
+            print("Error: geocode failed")
         if location is not None:
             return {'exist': True, 'longitude': location.longitude, 'latitude': location.latitude}
     return {'exist': False}

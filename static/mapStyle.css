@@ -3,23 +3,65 @@ body {
     padding:0;
 }
 
+h1 {
+  font-family: Gotham-Bold;
+  margin: 10px;
+  color: white;
+}
+
+p{
+  margin: 10px;
+  font-size: 12px;
+}
+
+#menu-list{
+  padding-left: 0px;
+  position: absolute;
+}
+
+#menu {
+    width: 20vw;
+    height: 100vh;
+    background-color: #c1d7e2;
+    position: absolute;
+    right: 0px;
+    font-family: Gotham-Light;
+    box-shadow: -1px 0px 5px;
+
+}
+
+.bubbles {
+  margin: 10px;
+  /*text-align: center;*/
+  cursor: pointer;
+  padding: 10px;
+  background-color: #edeef9;
+  display: inline-block;
+  font-size: 12px;
+  list-style: none;
+}
+
+@font-face {
+  font-family: Gotham-Light;
+  src: url(fonts/Gotham-Light.otf);
+}
+
+@font-face {
+  font-family: Gotham-Bold;
+  src: url(fonts/Gotham-Bold.otf);
+}
+
 #map {
-    position:absolute;
+    position: absolute;
     top:0;
     bottom:0;
-    width:100%;
+    height: 100vh;
+    width:80vw;
+    left: 0px;
+    display: block;
 }
 
-#bubble-container {
-    /*float: left;*/
-    position: absolute;
-    top: 30%;
-    left: 30%;
-    width: 40%;
-}
-
-
-.floatable
+/*.floatable
 {
     margin: 7px;
     float: left;
@@ -32,7 +74,6 @@ body {
     position: relative;
     z-index: 2;
     background-color: #00aced;
-    /*background-image: linear-gradient(bottom, rgb(182, 21, 34) 0%, rgb(0, 172, 237) 100%);*/
     background-image: -webkit-linear-gradient(top, rgba(0, 172, 237, 0.75), rgba(32, 197, 255, 0.65));
     box-shadow: inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999;
     border-radius: 15px;
@@ -46,7 +87,7 @@ body {
     -moz-animation-iteration-count: infinite;
     -moz-animation-timing-function: ease-in-out;
 
-}
+}*/
 
 
 
@@ -61,3 +102,27 @@ body {
     65% {-moz-transform:translate(0, 15px);}
     to {-moz-transform: translate(0, -0px);}
 }
+
+/* för inforutan*/
+.blur {
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    filter: blur(3px);
+}
+
+.dialog-box {
+    width: 300px;
+    height: 350px;
+    background: #fff;
+    padding: 25px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -175px;
+}
+/* inforuta slut*/
