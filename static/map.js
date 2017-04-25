@@ -91,11 +91,11 @@ map.on("load", function() {
 // the feature, with description HTML from its properties.
 map.on('click', function (e) {
 
+    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
 
     if (!features.length) {
         return;
     }
-    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
 
     var feature = features[0];
 

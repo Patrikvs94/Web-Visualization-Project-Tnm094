@@ -99,4 +99,18 @@ $(document).ready(function() {
                 });
             });
       });
+
+    /** INFORUTA **/
+    $('#dialog-box').hide();
+    $('#dialog-trigger').click(function() {
+        $('.wrapper').addClass('blur');
+        $('#dialog-box').show();
+    });
+
+    $('#close').click(function() {
+        $('#dialog-box').hide();
+        $('.wrapper').removeClass('blur');
+    }); /**inforuta slut**/
 });
+
+

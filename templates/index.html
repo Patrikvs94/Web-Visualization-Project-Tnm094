@@ -16,14 +16,19 @@
 
 </head>
 <body>
+    <div class="wrapper"><!-- all elements goes in wrapper-->
+        <div id="blurmap">
+            <div id="map"></div>
+        </div>
+        <div id="menu"> <h1>Twiz</h1>
+            <p>Trending subjects:</p>
+            <ul id="menu-list"></ul>
 
-    <div id="blurmap">
-        <div id="map"></div>
-    </div>
-    <div id="menu"> <h1>Twiz</h1>
-      <p>Trending subjects:</p>
-      <ul id="menu-list"></ul>
-    </div>
+            <!-- the trigger element for the dialog box-->
+            <a href="#" id="dialog-trigger">Trigger Dialog!</a>
+
+        </div>
+    </div><!--wrapper-->
 
     <!--<div id="bubble-container">
         <nobr title="New" class="testClass">
@@ -32,6 +37,11 @@
         </nobr>
     </div>-->
 
+    <!-- the dialog box -->
+    <div id="dialog-box" class="dialog-box">
+        <h3>Dialog Box!</h3> <a href="#" id="close" class="close">Close</a>
+        <p> Your content goes here</p>
+    </div>
 
     <script src="static/map.js"></script>
     <script src="static/bubbles.js"></script>
