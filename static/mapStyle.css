@@ -7,7 +7,38 @@ h1 {
   font-family: Gotham-Bold;
   margin: 10px;
   color: white;
+}
 
+p{
+  margin: 10px;
+  font-size: 12px;
+}
+
+#menu-list{
+  padding-left: 0px;
+  position: absolute;
+}
+
+#menu {
+    width: 20vw;
+    height: 100vh;
+    background-color: #c1d7e2;
+    position: absolute;
+    right: 0px;
+    font-family: Gotham-Light;
+    box-shadow: -1px 0px 5px;
+
+}
+
+.bubbles {
+  margin: 10px;
+  /*text-align: center;*/
+  cursor: pointer;
+  padding: 10px;
+  background-color: #edeef9;
+  display: inline-block;
+  font-size: 12px;
+  list-style: none;
 }
 
 @font-face {
@@ -29,38 +60,6 @@ h1 {
     left: 0px;
     display: block;
 }
-
-#bubble-container {
-    /*float: left;*/
-    position: absolute;
-    top: 30%;
-    left: 30%;
-    width: 40%;
-}
-
-#menu {
-    width: 20vw;
-    height: 100vh;
-    background-color: #c1d7e2;
-    position: absolute;
-    right: 0px;
-    font-family: Gotham-Light;
-    box-shadow: -1px 0px 5px;
-
-}
-
-.bubbles {
-  margin: 10px;
-  text-align:center;
-  cursor: pointer;
-  padding: 10px;
-  position: relative;
-  background-color: #edeef9;
-  display: inline-block;
-  font-size: 12px;
-}
-
-
 
 /*.floatable
 {

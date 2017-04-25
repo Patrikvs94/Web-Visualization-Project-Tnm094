@@ -112,11 +112,12 @@ def collect_tweets_data(sub):
                             r.json()['result']['sentiment'] = "Neutral"
                         temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                         print tweet['text'].encode('cp850', errors='replace')
-                        socketio.emit('tweet', temp, namespace='/tweets')
+                        if sub == subject:
+                            socketio.emit('tweet', temp, namespace='/tweets')
 
                 except GeocoderTimedOut as e:
                     print("Error: geocode failed")
-                
+
     print sub + ' is no longer the subject'
 
 @socketio.on('connect', namespace='/tweets')

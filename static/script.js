@@ -32,7 +32,6 @@ $(document).ready(function() {
     // event handler for server sent data
     // the data is displayed in the "Received" section of the page
     socket.on('tweet', function(msg) {
-        console.log('bajsbajsbajs');
         if (collection.features.length > 200)
           collection.features.shift();
           collection.features.push(msg);
@@ -45,7 +44,7 @@ $(document).ready(function() {
           console.log(trenddata[i].name);
         }
         for (i = 0; i < 10; i++){
-          var temp = document.createElement("div");
+          var temp = document.createElement("li");
 
           temp.id = "bubble" + i;
           temp.className = "bubbles";
@@ -53,7 +52,7 @@ $(document).ready(function() {
           temp.onclick = changefilter(0);
           //temp.style.left = '45vw';
           //temp.style.top = '50vh';
-          document.getElementById("menu").appendChild(temp);
+          document.getElementById("menu-list").appendChild(temp);
         }
 
         //On start make map blurry
@@ -67,15 +66,15 @@ $(document).ready(function() {
               console.log(collection.features);
 
                 //Mark clicked bubble and move bubbles to top
-                if (!expanded){
+                /*if (!expanded){
                     $("#bubble-container").animate({'top' : '0%', 'width' : '80%', 'left' : '10%' }, {duration : 500});
                     $("nobr.testClass > h1").remove();
                     $("nobr.testClass > h3").remove();
                     expanded = true;
                     changefilter(0);
-                }
-                //$(".bubbles").css('box-shadow', 'inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999');
-                //$(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
+                }*/
+                $(".bubbles").css('box-shadow', 'none');
+                $(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
 
 
                 console.log('//' + document.domain + ':' + location.port + namespace);

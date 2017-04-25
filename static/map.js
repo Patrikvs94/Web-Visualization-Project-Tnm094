@@ -90,11 +90,12 @@ map.on("load", function() {
 // When a click event occurs near a place, open a popup at the location of
 // the feature, with description HTML from its properties.
 map.on('click', function (e) {
-    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
+
 
     if (!features.length) {
         return;
     }
+    var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
 
     var feature = features[0];
 
@@ -102,16 +103,19 @@ map.on('click', function (e) {
     // based on the feature found.
     var popup = new mapboxgl.Popup()
         .setLngLat(feature.geometry.coordinates)
+        //.setHTML("hej")
         .setHTML("<div id='container'></div>")
         .addTo(map);
 
-    //When clicked show the right twitter widget
-    twttr.widgets.createTweet(
-        feature.properties.id,
-        document.getElementById('container'), {
-            width: "300"
-        }
-    );
+        //When clicked show the right twitter widget
+        twttr.widgets.createTweet(
+            feature.properties.id,
+            document.getElementById('container'), {
+                width: "300"
+            }
+        );
+
+
 });
 
 // Use the same approach as above to indicate that the symbols are clickable
