@@ -112,6 +112,3 @@ $(document).ready(function() {
         $('.wrapper').removeClass('blur');
     }); /**inforuta slut**/
 });
-
-
-$("body").css("overflow", "hidden");

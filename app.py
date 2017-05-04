@@ -127,7 +127,7 @@ def collect_tweets_data_rest(sub):
                 payload = {'txt': tweet['text']}
                 r = requests.post(sentiment_url, data=payload)
                 # print r.json()['result']['sentiment']
-                temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                temp = {'type': "Feature" , 'properties': {'opinion': 'Positive' , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 #print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
             counter =counter+1;

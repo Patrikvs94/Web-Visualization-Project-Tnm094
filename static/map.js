@@ -85,7 +85,6 @@ map.on("load", function() {
 
             })
         })
-    })
 
 });
 
