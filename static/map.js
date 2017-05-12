@@ -79,8 +79,8 @@ map.on("load", function() {
                     "circle-opacity": 0.5,
                     "circle-blur": 0.5
                 },
-                "filter": ["==", "opinion", colors[0]],
-                "timefilter": ["==", "time", time  ]
+                "filter": ["==", "opinion", colors[0]]//,
+                //"timefilter": ["==", "time", time  ]
 
 
             })
