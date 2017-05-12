@@ -97,14 +97,14 @@ def collect_tweets_data_stream(sub):
                 coordinates.append(tweet_location['longitude'])
                 coordinates.append(tweet_location['latitude'])
                 # ordanalys
-                payload = {'txt': tweet['text']}
-                r = requests.post(sentiment_url, data=payload)
-                print r.json()['result']['confidence']
-                print r.json()['result']['sentiment']
-                if r.json()['result']['confidence'] < 95:
-                    r.json()['result']['sentiment'] = "Neutral"
+                #payload = {'txt': tweet['text']}
+                #r = requests.post(sentiment_url, data=payload)
+                #print r.json()['result']['confidence']
+                #print r.json()['result']['sentiment']
+                #if r.json()['result']['confidence'] < 95:
+                #    r.json()['result']['sentiment'] = "Neutral"
                 # print r.json()['result']['sentiment']
-                temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                temp = {'type': "Feature" , 'properties': {'opinion': 'Positive' , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
     print sub + ' is no longer the subject'
@@ -124,8 +124,8 @@ def collect_tweets_data_rest(sub):
                 coordinates.append(tweet_location['longitude'])
                 coordinates.append(tweet_location['latitude'])
                 # ordanalys
-                payload = {'txt': tweet['text']}
-                r = requests.post(sentiment_url, data=payload)
+                #payload = {'txt': tweet['text']}
+                #r = requests.post(sentiment_url, data=payload)
                 # print r.json()['result']['sentiment']
                 temp = {'type': "Feature" , 'properties': {'opinion': 'Positive' , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 #print tweet['text'].encode('cp850', errors='replace')
