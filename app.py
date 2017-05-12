@@ -74,13 +74,14 @@ def process():
     global subject
     subject = request.form['message']
     print subject + 'has been clicked /Python'
-    collect_tweets_data_stream(subject)
-    #collect_tweets_data_rest(subject)
+    #collect_tweets_data_stream(subject)
+    collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
 
 def collect_tweets_data_stream(sub):
+    print(random.randint(1, 10))
     dog = TwitterWatchDog(sub)
     dog.check_alive()
     print 'subject = ' + subject
@@ -97,8 +98,9 @@ def collect_tweets_data_stream(sub):
             tweet_location = tweet_has_location(tweet)
             if tweet_location['exist']:
                 coordinates = []
-                coordinates.append(tweet_location['longitude'])
-                coordinates.append(tweet_location['latitude'])
+                coordinates.append(tweet_location['longitude']+0.0001*random.randint(1, 10))
+                coordinates.append(tweet_location['latitude']+0.0001*random.randint(1, 10))
+                print(coordinates[1]);
                 # ordanalys
                 #payload = {'txt': tweet['text']}
                 #r = requests.post(sentiment_url, data=payload)
@@ -128,8 +130,8 @@ def collect_tweets_data_rest(sub):
                 #print tweet['text']
                 #print counter
                 coordinates = []
-                coordinates.append(tweet_location['longitude'])
-                coordinates.append(tweet_location['latitude'])
+                coordinates.append(tweet_location['longitude']+0.001*random.randint(1, 10))
+                coordinates.append(tweet_location['latitude']+0.001*random.randint(1, 10))
                 # ordanalys
                 #payload = {'txt': tweet['text']}
                 #r = requests.post(sentiment_url, data=payload)
