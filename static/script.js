@@ -27,27 +27,6 @@ $(document).ready(function() {
           collection.features.push(msg);
           tweetSize = opinions[0] + opinions[1] + opinions[2];
           $("#nrOfTweets").html(tweetSize);
-
-          if(msg.properties.opinion == 'Positive')
-            opinions[0]++;
-
-          if(msg.properties.opinion == 'Negative')
-            opinions[1]++;
-
-          if(msg.properties.opinion == 'Neutral')
-            opinions[2]++;
-
-            /*create bar chart*/
-            var x = d3.scale.linear()
-                .domain([0, d3.max(opinions)])
-                .range([0, 10]);
-
-            d3.select(".chart")
-              .selectAll("div")
-                .data(opinions)
-              .enter().append("div")
-                .style("width", function(d) { return x(d) + "px"; })
-                .text(function(d) { return d; });
         });
 
 
@@ -149,4 +128,19 @@ $(document).ready(function() {
             changefilter(0);
           }
       }
+
+      //Number of Positive, Negative and Neutral tweets
+    switch(collection.features) {
+      case 'Positive':
+          opinions[0]++;
+          break;
+      case 'Neutral':
+          opinions[1]++;
+          break;
+      case 'Negative':
+        opinions[2]++;
+        break;
+}
+
+      console.log(opinions);
 });

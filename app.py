@@ -109,15 +109,10 @@ def collect_tweets_data_stream(sub):
                 #if r.json()['result']['confidence'] < 95:
                 #    r.json()['result']['sentiment'] = "Neutral"
                 # print r.json()['result']['sentiment']
-<<<<<<< HEAD
-                temp = {'type': "Feature" , 'properties': {'opinion': 'Positive' , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-=======
 
                 #to randomize a senitment value
                 rand_sent = ['Positive', 'Negative', 'Neutral']
-
                 temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
->>>>>>> origin/master
                 print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
 
