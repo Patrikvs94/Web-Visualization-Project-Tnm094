@@ -111,6 +111,7 @@ def collect_tweets_data_stream(sub):
                 temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': "live" }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
+
     print sub + ' is no longer the subject'
 
 def collect_tweets_data_rest(sub):
@@ -133,7 +134,6 @@ def collect_tweets_data_rest(sub):
 
                 #to randomize a senitment value
                 rand_sent = ['Positive', 'Negative', 'Neutral']
-
                 temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': tweet['created_at'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 #print tweet['text'].encode('cp850', errors='replace')
                 print tweet['created_at']

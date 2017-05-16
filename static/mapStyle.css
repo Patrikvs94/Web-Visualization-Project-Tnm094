@@ -27,6 +27,8 @@ p{
 #menu-list{
   padding-left: 0px;
   position: static;
+  position: absolute;
+  margin: 15px;
 }
 
 #menu {
@@ -40,15 +42,27 @@ p{
 
 }
 
-.bubbles {
-  margin: 10px;
+/*.bubbles {
+  margin: 10px;*/
   /*text-align: center;*/
-  cursor: pointer;
+  /*cursor: pointer;
   padding: 10px;
   background-color: #edeef9;
   display: inline-block;
   font-size: 12px;
   list-style: none;
+}*/
+
+.bubbles {
+  font-family: Gotham-black;
+  padding: 3px;
+  display: inline-block;
+
+}
+
+.bubbles:hover {
+  color: #edeef9;
+
 }
 
 @font-face {
@@ -59,6 +73,11 @@ p{
 @font-face {
   font-family: Gotham-Bold;
   src: url(fonts/Gotham-Bold.otf);
+}
+
+@font-face {
+  font-family: Gotham-Black;
+  src: url(fonts/Gotham-Black.otf);
 }
 
 #map {
@@ -114,7 +133,7 @@ p{
 }
 
 /* för inforutan*/
-.blur {
+/*.blur {
     -webkit-filter: blur(3px);
     -moz-filter: blur(3px);
     filter: blur(3px);
@@ -158,5 +177,110 @@ p{
 
 #dialog-trigger:hover {
     background-color: #f7f7ff;
-}
+}*/
 /* inforuta slut*/
+
+
+/*INFORUTA:*/
+
+/* The background when opening to info box */
+.dialog-box {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /*background-color: rgb(0,0,0); Fallback color */
+    /*background-color: rgba(1,1,1,0.4);  Black w/ opacity */
+}
+
+/* Info box Content */
+.dialog-context {
+    width: 300px;
+    height: 350px;
+    background: #fff;
+    padding: 25px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -175px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*Info button*/
+#infoButton {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 8vh;
+    height: 8vh;
+    background-color: #edeef9;
+    -moz-border-radius: 5vh;
+    -webkit-border-radius: 5vh;
+    border-radius: 5vh;
+    border: 2px solid gray;
+    text-align: center;
+    vertical-align: middle;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 20px;
+    color: gray;
+}
+
+#infoButton:hover {
+    background-color: #f7f7ff;
+}
+
+#infoButton:focus {
+  outline: 0;
+}
+
+/*BAR CHART*/
+#barChart {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+#selectedSubject {
+  width: 80%;
+  height: 90px;
+  margin: auto;
+  padding: 5px;
+  font-family: Gotham-black;
+  font-size: 20px;
+  background-image: url('images/bubble.png');
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+<<<<<<< HEAD
+/* inforuta slut*/
+=======
+>>>>>>> 361b039320588cf49458a73720e079ba94fa216e
