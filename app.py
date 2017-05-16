@@ -14,6 +14,9 @@ from config import CONF
 import urllib
 import requests
 
+#to randomize a sentiment value
+import random
+
 sentiment_url = 'http://sentiment.vivekn.com/api/text/'
 
 twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'],CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])
@@ -71,13 +74,14 @@ def process():
     global subject
     subject = request.form['message']
     print subject + 'has been clicked /Python'
-    collect_tweets_data_stream(subject)
-    #collect_tweets_data_rest(subject)
+    #collect_tweets_data_stream(subject)
+    collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
 
 def collect_tweets_data_stream(sub):
+    print(random.randint(1, 10))
     dog = TwitterWatchDog(sub)
     dog.check_alive()
     print 'subject = ' + subject
@@ -94,8 +98,9 @@ def collect_tweets_data_stream(sub):
             tweet_location = tweet_has_location(tweet)
             if tweet_location['exist']:
                 coordinates = []
-                coordinates.append(tweet_location['longitude'])
-                coordinates.append(tweet_location['latitude'])
+                coordinates.append(tweet_location['longitude']+0.0001*random.randint(1, 10))
+                coordinates.append(tweet_location['latitude']+0.0001*random.randint(1, 10))
+                print(coordinates[1]);
                 # ordanalys
                 #payload = {'txt': tweet['text']}
                 #r = requests.post(sentiment_url, data=payload)
@@ -104,7 +109,15 @@ def collect_tweets_data_stream(sub):
                 #if r.json()['result']['confidence'] < 95:
                 #    r.json()['result']['sentiment'] = "Neutral"
                 # print r.json()['result']['sentiment']
+<<<<<<< HEAD
                 temp = {'type': "Feature" , 'properties': {'opinion': 'Positive' , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+=======
+
+                #to randomize a senitment value
+                rand_sent = ['Positive', 'Negative', 'Neutral']
+
+                temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+>>>>>>> origin/master
                 print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
 
@@ -122,13 +135,17 @@ def collect_tweets_data_rest(sub):
                 #print tweet['text']
                 #print counter
                 coordinates = []
-                coordinates.append(tweet_location['longitude'])
-                coordinates.append(tweet_location['latitude'])
+                coordinates.append(tweet_location['longitude']+0.001*random.randint(1, 10))
+                coordinates.append(tweet_location['latitude']+0.001*random.randint(1, 10))
                 # ordanalys
                 #payload = {'txt': tweet['text']}
                 #r = requests.post(sentiment_url, data=payload)
                 # print r.json()['result']['sentiment']
-                temp = {'type': "Feature" , 'properties': {'opinion': 'Positive' , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+
+                #to randomize a senitment value
+                rand_sent = ['Positive', 'Negative', 'Neutral']
+
+                temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 #print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
             counter =counter+1;
