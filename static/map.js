@@ -55,7 +55,29 @@ map.on("load", function() {
     //Add a source with tweets
   window.setInterval(function()
   {
+    /*
     map.getSource("tweets").setData({"type": "FeatureCollection", "features": collection.features});
+    */
+    if(parseInt(document.getElementById('slider').value) < 60)
+    {
+      var minute = parseInt(document.getElementById('slider').value)- timeShift;
+      var hour = currentdate.getHours();
+      if(minute < 0 )
+      {
+        hour--;
+        minute+=60;
+      }
+
+      if(allTheTweets[minute])
+        map.getSource("tweets").setData({"type": "FeatureCollection", "features": allTheTweets[minute] });
+      else {
+        map.getSource("tweets").setData({"type": "FeatureCollection", "features": [] });
+      }
+    }
+    else {
+      map.getSource("tweets").setData({"type": "FeatureCollection", "features": allTheTweets["live"] });
+    }
+
     //console.log("updated data");
   }, 100);
     map.addSource("tweets", {

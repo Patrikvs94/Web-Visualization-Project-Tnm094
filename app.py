@@ -11,6 +11,7 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 from geojson import Feature, Point, FeatureCollection
 from config import CONF
+import random
 import urllib
 import requests
 
@@ -66,13 +67,17 @@ subject = ''
 def index():
     return render_template('index.html')
 
+@app.route('/switch', methods = ['POST'])
+def switch():
+    return render_template('index.html')
+
 @app.route('/process', methods = ['POST'])
 def process():
     global subject
     subject = request.form['message']
     print subject + 'has been clicked /Python'
-    collect_tweets_data_stream(subject)
-    #collect_tweets_data_rest(subject)
+    gevent.spawn(collect_tweets_data_stream, sub=subject)
+    collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
@@ -84,13 +89,10 @@ def collect_tweets_data_stream(sub):
     print 'sub = ' + sub
     while sub == subject:
         try:
-            print('try')
             tweet = dog.streamer.queue.get(timeout=5)
         except gevent.queue.Empty:
-            print('except')
             dog.check_alive()
         else:
-            print('else')
             tweet_location = tweet_has_location(tweet)
             if tweet_location['exist']:
                 coordinates = []
@@ -98,14 +100,16 @@ def collect_tweets_data_stream(sub):
                 coordinates.append(tweet_location['latitude'])
                 # ordanalys
                 payload = {'txt': tweet['text']}
-                r = requests.post(sentiment_url, data=payload)
-                print r.json()['result']['confidence']
-                print r.json()['result']['sentiment']
-                if r.json()['result']['confidence'] < 95:
-                    r.json()['result']['sentiment'] = "Neutral"
+                #r = requests.post(sentiment_url, data=payload)
+                #print r.json()['result']['confidence']
+                #print r.json()['result']['sentiment']
+                #if r.json()['result']['confidence'] < 95:
+                    #r.json()['result']['sentiment'] = "Neutral"
                 # print r.json()['result']['sentiment']
-                temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                print tweet['text'].encode('cp850', errors='replace')
+                #to randomize a senitment value
+                rand_sent = ['Positive', 'Negative', 'Neutral']
+                temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': "live"}, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                #print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
     print sub + ' is no longer the subject'
 
@@ -113,7 +117,9 @@ def collect_tweets_data_rest(sub):
     query = sub + ' filter:safe'
     results = twitter.cursor(twitter.search, q=query, result_type='recent', count='100')
     counter =0
-    while counter < 2000:
+    print 'subject = ' + subject
+    print 'sub = ' + sub
+    while counter < 2000 or sub == subject:
         for tweet in results:
             tweet_location = tweet_has_location(tweet)
             if tweet_location['exist']:
@@ -125,13 +131,17 @@ def collect_tweets_data_rest(sub):
                 coordinates.append(tweet_location['latitude'])
                 # ordanalys
                 payload = {'txt': tweet['text']}
-                r = requests.post(sentiment_url, data=payload)
+                #r = requests.post(sentiment_url, data=payload)
                 # print r.json()['result']['sentiment']
-                temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']) }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                rand_sent = ['Positive', 'Negative', 'Neutral']
+                temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': tweet['created_at']}, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                #temp = {'type': "Feature" , 'properties': {'opinion': r.json()['result']['sentiment'] , 'id': str(tweet['id']), 'time': tweet['created_at']}, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 #print tweet['text'].encode('cp850', errors='replace')
+                print tweet['created_at']
+                print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
             counter =counter+1;
-            if counter%100==0:
+            if counter%100==0 or sub != subject:
                 break
         results = twitter.cursor(twitter.search, q=query, result_type='recent', count='100', max_id=tweet['id'])
 

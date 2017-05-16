@@ -16,7 +16,7 @@ p{
 
 #menu-list{
   padding-left: 0px;
-  position: absolute;
+  position: static;
 }
 
 #menu {

@@ -26,6 +26,10 @@
 
             <!-- the trigger element for the dialog box-->
             <a href="#" id="dialog-trigger">?</a>
+            <div class='session' id='sliderbar'>
+                <h2>Time: <label id='active-minute'>Live</label></h2>
+                <input id='slider' class='row' type='range' min='1' max='60' step='1' value='60' />
+            </div>
 
         </div>
     </div><!--wrapper-->
@@ -37,10 +41,6 @@
         </nobr>
     </div>
     </div>-->
-    <div class='session' id='sliderbar'>
-        <h2>Minute: <label id='active-hour'>12PM</label></h2>
-        <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
-      </div>
 
     <!-- the dialog box -->
     <div id="dialog-box" class="dialog-box">
@@ -48,6 +48,7 @@
         <p> Your content goes here</p>
     </div>
 
+    <script src="static/timeline.js"></script>
     <script src="static/map.js"></script>
     <script src="static/bubbles.js"></script>
 </body>

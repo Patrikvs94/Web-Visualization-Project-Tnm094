@@ -20,7 +20,9 @@ var subject = "";
 //retrieve twitter data from python
 $(document).ready(function() {
 
+
   collection = {type :"FeatureCollection", features: [] };
+  allTheTweets = {};
 
     namespace = '/tweets'; // change to an empty string to use the global namespace
 
@@ -32,9 +34,27 @@ $(document).ready(function() {
     // event handler for server sent data
     // the data is displayed in the "Received" section of the page
     socket.on('tweet', function(msg) {
-        if (collection.features.length > 200)
-          collection.features.shift();
-          collection.features.push(msg);
+
+        var time = (new Date(msg.properties.time)).getMinutes();
+        if(!isNaN(time))
+        {
+          console.log(time + "inserted");
+          if (!(allTheTweets[time]))
+          {
+            allTheTweets[time] = [];
+          }
+          allTheTweets[time].push(msg);
+            //var temp = new Date(msg.properties.time);
+            //console.log(temp.getMinutes());
+        }
+        else
+        {
+          if (!(allTheTweets[msg.properties.time]))
+          {
+            allTheTweets[msg.properties.time] = [];
+          }
+          allTheTweets[msg.properties.time].push(msg);
+        }
         });
 
       //Get trending tweets
@@ -112,5 +132,3 @@ $(document).ready(function() {
         $('.wrapper').removeClass('blur');
     }); /**inforuta slut**/
 });
-
-
