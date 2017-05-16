@@ -4,18 +4,8 @@ var angle = 0;
 //sparar trend.json till en variabel trenddata
 var trenddata = {};
 var subject = "";
-/*$.ajax({
-    url: "static/trends.json",
-    async: false,
-    dataType: 'json',
-    success: function(data) {
-        trenddata = data;
-    }
-});*/
-
-// testa printa ut trenddata
-//console.log(trenddata.trends[3].name);
-
+var opinions = [0, 0, 0]; //Positive, Neutral, Negative
+var tweetSize = 0;
 
 //retrieve twitter data from python
 $(document).ready(function() {
@@ -35,7 +25,31 @@ $(document).ready(function() {
         if (collection.features.length > 200)
           collection.features.shift();
           collection.features.push(msg);
+          tweetSize = opinions[0] + opinions[1] + opinions[2];
+          $("#nrOfTweets").html(tweetSize);
+
+          if(msg.properties.opinion == 'Positive')
+            opinions[0]++;
+
+          if(msg.properties.opinion == 'Negative')
+            opinions[1]++;
+
+          if(msg.properties.opinion == 'Neutral')
+            opinions[2]++;
+
+            /*create bar chart*/
+            var x = d3.scale.linear()
+                .domain([0, d3.max(opinions)])
+                .range([0, 10]);
+
+            d3.select(".chart")
+              .selectAll("div")
+                .data(opinions)
+              .enter().append("div")
+                .style("width", function(d) { return x(d) + "px"; })
+                .text(function(d) { return d; });
         });
+
 
       //Get trending tweets
     socket.on('trends', function(msg){
@@ -44,19 +58,15 @@ $(document).ready(function() {
           console.log(trenddata[i].name);
         }
         for (i = 0; i < 10; i++){
-          var temp = document.createElement("li");
+          var temp = document.createElement("div");
 
           temp.id = "bubble" + i;
           temp.className = "bubbles";
           temp.innerHTML = trenddata[i].name;
-          temp.onclick = changefilter(0);
-          //temp.style.left = '45vw';
-          //temp.style.top = '50vh';
+          //temp.onclick = changefilter(0);
           document.getElementById("menu-list").appendChild(temp);
+          temp.style.fontSize = 25 - i + 'px';
         }
-
-        //On start make map blurry
-        //changefilter(5);
 
         $(function(){
             var expanded = false;
@@ -65,17 +75,33 @@ $(document).ready(function() {
             {
               console.log(collection.features);
 
-                //Mark clicked bubble and move bubbles to top
-                /*if (!expanded){
-                    $("#bubble-container").animate({'top' : '0%', 'width' : '80%', 'left' : '10%' }, {duration : 500});
-                    $("nobr.testClass > h1").remove();
-                    $("nobr.testClass > h3").remove();
-                    expanded = true;
-                    changefilter(0);
-                }*/
-                $(".bubbles").css('box-shadow', 'none');
-                $(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
 
+                //$(".bubbles").css('box-shadow', 'none');
+                //$(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
+                //$(".bubbles").appendTo("#menu-list"); //Move old subject to menu list
+                //$(this).appendTo("#selectedSubject"); //Move sellected subject up
+                var selSub = $( this ).text();
+                $("#subText").text(selSub);
+                $(".bubbles").css('display', 'block');
+                $(this).css('display', 'none');
+                $(this).css('bottom', '50%');
+                $(this).css('right', '50%');
+                $("#nrOfTweets").html(0); //Set number of tweets to 0 when new subject is sellected
+
+
+                //Display current time, and allways with two digits
+                var currentDate = new Date();
+                var zeros = '00';
+                var hours = currentDate.getHours();
+                var minutes = currentDate.getMinutes();
+                var hourSize = Math.log10(hours)+1;
+                var minSize = Math.log10(minutes)+1;
+                if(hours == 0)
+                  hourSize = 1;
+                if(minutes == 0)
+                  minSize = 1;
+                document.getElementById("currentTime").innerHTML = 'Number of tweets since ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ':';
+                opinions = [0, 0, 0]; //Empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
                 collection.features = [];
@@ -100,15 +126,27 @@ $(document).ready(function() {
             });
       });
 
-    /** INFORUTA **/
-    $('#dialog-box').hide();
-    $('#dialog-trigger').click(function() {
-        $('.wrapper').addClass('blur');
-        $('#dialog-box').show();
-    });
+      var infoBox = document.getElementById('dialog-box');
+      var infoBtn = document.getElementById('infoButton');
+      var span = document.getElementsByClassName("close")[0];
 
-    $('#close').click(function() {
-        $('#dialog-box').hide();
-        $('.wrapper').removeClass('blur');
-    }); /**inforuta slut**/
+      // When the user clicks the button, open the info box
+      infoBtn.onclick = function() {
+        infoBox.style.display = "block";
+        changefilter(5);
+      }
+
+      // When the user clicks on <span> (x), close the info box
+      span.onclick = function() {
+          infoBox.style.display = "none";
+          changefilter(0);
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if(event.target == infoBox) {
+            infoBox.style.display = "none";
+            changefilter(0);
+          }
+      }
 });

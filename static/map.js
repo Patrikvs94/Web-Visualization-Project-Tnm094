@@ -16,38 +16,7 @@ var map = new mapboxgl.Map({
 
 
 var colors = [["Positive", "green"],["Negative", "red"], ["Neutral", "yellow"]];
-var times = ["live"];
 
-
-/*
-//Function that adds tweets to tweetsData
-function addTweet(opinion, description, coordinates){
-
-    tweetsData.push({
-        "type": "Feature",
-        "properties": {
-            "opinion": opinion,
-            "description": description
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": coordinates
-        }
-    })
-}
-
-function clearTweets(){
-    tweetsData = [];
-}
-
-addTweet("positive","Tillagd efteråt", [0, 0]);
-addTweet("negative", '<img src="https://g.twimg.com/about/feature-corporate/image/twitterbird_RGB.png" style="height:100px;><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sunsets ' +
-    'don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS">@GrandTetonNPS</a>. ' +
-    '<a href="https://twitter.com/hashtag/nature?src=hash">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash">' +
-    '#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Dept of Interior ' +
-    '(@Interior) <a href="https://twitter.com/Interior/status/463440424141459456">May 5, 2014</a></blockquote>', [-45, 67] );
-addTweet("neutral", "Här är en neutral tweet", [76, 54]);
-*/
 
 
 //Load map with source and layers
@@ -80,7 +49,7 @@ map.on("load", function() {
                     "circle-blur": 0.5
                 },
                 "filter": ["==", "opinion", colors[0]],
-                "timefilter": ["==", "time", time  ]
+                //"timefilter": ["==", "time", time  ]
 
 
             })
@@ -101,6 +70,9 @@ map.on('click', function (e) {
 
     var feature = features[0];
 
+
+
+
     // Populate the popup and set its coordinates
     // based on the feature found.
     var popup = new mapboxgl.Popup()
@@ -110,12 +82,13 @@ map.on('click', function (e) {
         .addTo(map);
 
         //When clicked show the right twitter widget
-        twttr.widgets.createTweet(
+        var twtt = twttr.widgets.createTweet(
             feature.properties.id,
             document.getElementById('container'), {
                 width: "300"
             }
         );
+
 
 });
 

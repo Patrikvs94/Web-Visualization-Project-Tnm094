@@ -6,6 +6,7 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> <!--Twitter css-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
+    <script src="//d3js.org/d3.v3.min.js"></script> <!--d3js-->
     <script src="static/jquery-3.2.0.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
     <script src="static/jqfloat.js"></script>
@@ -14,40 +15,49 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet'/>
     <link href="static/mapStyle.css" rel="stylesheet"/>
 
+
 </head>
 <body>
-    <div class="wrapper"><!-- all elements goes in wrapper-->
+    <!--<div class="wrapper">--><!-- all elements goes in wrapper-->
         <div id="blurmap">
             <div id="map"></div>
+
+          <div id="menu"> <h1>Twiz</h1>
+              <p>Selected subject:</p>
+              <div id="selectedSubject"><p id="subText"></p></div>
+              <div id="subjectInfo">
+                <p id="currentTime"></><p id="nrOfTweets"></p>
+                <div id="barChart"></div>
+              </div>
+
+              <p>Trending subjects:</p>
+              <div id="menu-list"></div>
+
+              <!-- the trigger element for the dialog box-->
+              <!--<a href="#" id="dialog-trigger">?</a>-->
+              <button id="infoButton">?</button>
+
+              <div class='session' id='sliderbar'>
+                  <h2>Minute: <label id='active-hour'>12PM</label></h2>
+                  <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
+              </div>
+          </div>
         </div>
-        <div id="menu"> <h1>Twiz</h1>
-            <p>Trending subjects:</p>
-            <ul id="menu-list"></ul>
+    <!--</div>--><!--wrapper-->
 
-            <!-- the trigger element for the dialog box-->
-            <a href="#" id="dialog-trigger">?</a>
-
-            <div class='session' id='sliderbar'>
-                <h2>Minute: <label id='active-hour'>12PM</label></h2>
-                <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
-            </div>
-        </div>
-
-    </div><!--wrapper-->
-
-    <!--<div id="bubble-container">
-        <nobr title="New" class="testClass">
-            <h1 id="starttext">Här är en text till startsidan</h1>
-            <h3> Här är en mindre text till startsidan</h3>
-        </nobr>
-    </div>
-    </div>-->
 
     <!-- the dialog box -->
     <div id="dialog-box" class="dialog-box">
-        <h3>Dialog Box!</h3> <a href="#" id="close" class="close">Close</a>
-        <p> Your content goes here</p>
-    </div>
+        <!--<h3>Dialog Box!</h3> <a href="#" id="close" class="close">Close</a>-->
+        <!--<p> Your content goes here</p>-->
+
+      <!--Info to the dialog box -->
+      <div class="dialog-context">
+        <span class="close">&times;</span>
+        <p> Här är info</p>
+      </div>
+  </div>
+
 
     <script src="static/map.js"></script>
     <script src="static/bubbles.js"></script>
