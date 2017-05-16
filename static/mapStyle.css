@@ -8,10 +8,20 @@ h1 {
   margin: 10px;
   color: white;
 }
+h3{
+    font-family: Gotham-Bold;
+}
+
+ol{
+    font-family: Gotham-Light;
+    font-size: small;
+}
+
 
 p{
   margin: 10px;
   font-size: 12px;
+  font-family: Gotham-Light;
 }
 
 #menu-list{

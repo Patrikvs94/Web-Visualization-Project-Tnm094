@@ -90,22 +90,22 @@ map.on("load", function() {
     });
 
     //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
-    colors.forEach(function(colors) {
-        map.addLayer({
-            "id": "opinionis" + colors[0],
-            "type": "circle",
-            "source":"tweets",
-            "paint": {
-                "circle-radius": 10,
-                "circle-color": colors[1],
-                "circle-opacity": 0.5,
-                "circle-blur": 0.5
-            },
-            "filter": ["==", "opinion", colors[0]]
+        colors.forEach(function(colors) {
+            map.addLayer({
+                "id": "opinionis" + colors[0],
+                "type": "circle",
+                "source":"tweets",
+                "paint": {
+                    "circle-radius": 10,
+                    "circle-color": colors[1],
+                    "circle-opacity": 0.5,
+                    "circle-blur": 0.5
+                },
+                "filter": ["==", "opinion", colors[0]]
 
 
+            })
         })
-    })
 
 });
 
@@ -137,7 +137,6 @@ map.on('click', function (e) {
                 width: "300"
             }
         );
-
 
 });
 
