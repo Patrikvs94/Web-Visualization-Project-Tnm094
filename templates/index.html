@@ -8,21 +8,25 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
     <script src="//d3js.org/d3.v3.min.js"></script> <!--d3js-->
     <script src="static/jquery-3.2.0.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script src="static/jqfloat.js"></script>
     <script src="static/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet'/>
     <link href="static/mapStyle.css" rel="stylesheet"/>
-
+    <link href="static/loader.css" rel="stylesheet"/>
 
 </head>
 <body>
     <!--<div class="wrapper">--><!-- all elements goes in wrapper-->
         <div id="blurmap">
+            <div id="loader" style="display: none;">
+                <!--<p> Please Wait</p>-->
+            </div>
             <div id="map"></div>
 
-          <div id="menu"> <h1>Twiz</h1>
+          <div id="menu"> <h1 onClick="window.location.reload()">Twiz</h1>
+
               <p>Selected subject:</p>
               <div id="selectedSubject"><p id="subText"></p></div>
               <div id="subjectInfo">
@@ -46,6 +50,8 @@
                   <h2>Minute: <label id='active-hour'>12PM</label></h2>
                   <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
               </div>
+
+
           </div>
         </div>
     <!--</div>--><!--wrapper-->
@@ -70,7 +76,7 @@
       </div>
   </div>
 
-
+    <div class="modal"></div>
 
     <script src="static/map.js"></script>
     <script src="static/bubbles.js"></script>

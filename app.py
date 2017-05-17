@@ -74,8 +74,8 @@ def process():
     global subject
     subject = request.form['message']
     print subject + 'has been clicked /Python'
-    #collect_tweets_data_stream(subject)
-    collect_tweets_data_rest(subject)
+    collect_tweets_data_stream(subject)
+    #collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 

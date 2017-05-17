@@ -27,7 +27,19 @@ $(document).ready(function() {
           collection.features.push(msg);
           tweetSize = opinions[0] + opinions[1] + opinions[2];
           $("#nrOfTweets").html(tweetSize);
+
+
+        //if(tweetSize > 20)
+        //{
+        $('#loader').hide();
+        changefilter(0);
+        map.setInteractive = false;
+        //}
+
+
         });
+
+
 
 
       //Get trending tweets
@@ -52,6 +64,10 @@ $(document).ready(function() {
             //When bubbles are clicked
             $('.bubbles').click(function()
             {
+                console.log("Går in i funktion");
+                $('#loader').show();
+                changefilter(5);
+                $('map').css('-webkit-filter', 'blur(3px)');
               console.log(collection.features);
 
 
