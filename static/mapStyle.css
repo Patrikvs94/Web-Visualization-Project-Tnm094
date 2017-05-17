@@ -279,7 +279,21 @@ p{
   background-size: auto 100%;
   background-repeat: no-repeat;
 }
-<<<<<<< HEAD
+
+#sliderbar {
+  position: absolute;
+  z-index: 3;
+  width: 80%;
+}
+
+#sliderbar h2 {
+  float: right;
+  margin-right: 4%;
+}
+
+#slider {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 83vh;
+}
 /* inforuta slut*/
-=======
->>>>>>> 361b039320588cf49458a73720e079ba94fa216e
