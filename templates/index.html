@@ -8,9 +8,11 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
     <script src="//d3js.org/d3.v3.min.js"></script> <!--d3js-->
     <script src="static/jquery-3.2.0.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!-- for pie chart-->
     <script src="static/jqfloat.js"></script>
     <script src="static/script.js"></script>
+    <script src="static/piescript.js"></script> <!--script for pie chart-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet'/>
     <link href="static/mapStyle.css" rel="stylesheet"/>
@@ -26,15 +28,18 @@
             <div id="map"></div>
 
           <div id="menu"> <h1 onClick="window.location.reload()">Twiz</h1>
+              <p>Se tweets live med Twiz. Välj ett trendande ämne nedan för att börja streama tweets. Valt ämne:</p>
 
-              <p>Selected subject:</p>
               <div id="selectedSubject"><p id="subText"></p></div>
               <div id="subjectInfo">
-                <p id="currentTime"></><p id="nrOfTweets"></p>
-                <div id="barChart"></div>
+
+                <span id="currentTime"></span><span id="nrOfTweets"></span>
+                <!--<div id="barChart"></div>-->
+                <div id="piechart"></div>
+
               </div>
 
-              <p>Trending subjects:</p>
+              <p>Trendande ämnen just nu:</p>
               <div id="menu-list"></div>
             <!--<div class='session' id='sliderbar'>
                 <h2>Minute: <label id='active-hour'>12PM</label></h2>
@@ -43,12 +48,12 @@
 
 
               <!-- the trigger element for the dialog box-->
-              <!--<a href="#" id="dialog-trigger">?</a>-->
               <button id="infoButton">?</button>
 
+
               <div class='session' id='sliderbar'>
-                  <h2>Minute: <label id='active-hour'>12PM</label></h2>
-                  <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
+                  <h2>Time: <label id='active-minute'>Live</label></h2>
+                  <input id='slider' class='row' type='range' min='1' max='60' step='1' value='60' />
               </div>
 
 
@@ -78,6 +83,8 @@
 
     <div class="modal"></div>
 
+
+    <script src="static/timeline.js"></script>
     <script src="static/map.js"></script>
     <script src="static/bubbles.js"></script>
 </body>
