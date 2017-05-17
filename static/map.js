@@ -11,7 +11,8 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/sovanny/cizgswpga00to2sqz9xcdew48', //stylesheet location
     center: [0, 50], // starting position
     zoom: 1, // starting zoom
-    maxBounds: bounds
+    maxBounds: bounds,
+    interactive: true
 });
 
 

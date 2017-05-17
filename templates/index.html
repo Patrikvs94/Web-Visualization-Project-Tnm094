@@ -16,28 +16,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet'/>
     <link href="static/mapStyle.css" rel="stylesheet"/>
-
+    <link href="static/loader.css" rel="stylesheet"/>
 
 </head>
 <body>
     <!--<div class="wrapper">--><!-- all elements goes in wrapper-->
         <div id="blurmap">
+            <div id="loader" style="display: none;">
+                <!--<p> Please Wait</p>-->
+            </div>
             <div id="map"></div>
 
-          <div id="menu"> <h1>Twiz</h1>
+          <div id="menu"> <h1 onClick="window.location.reload()">Twiz</h1>
               <p>Se tweets live med Twiz. Välj ett trendande ämne nedan för att börja streama tweets. Valt ämne:</p>
               <!--<div id="selectedSubject"></div>-->
 
 			<p id="subText" class="speech"></p>
         		
-      		
-
-              
-
-
-
-
-              <div id="subjectInfo">
+             <div id="subjectInfo">
 
                 <span id="currentTime"></span><span id="nrOfTweets"></span>
                 <!--<div id="barChart"></div>-->
@@ -62,6 +58,7 @@
                   <input id='slider' class='row' type='range' min='1' max='60' step='1' value='60' />
               </div>
 
+
           </div>
         </div>
     <!--</div>--><!--wrapper-->
@@ -85,6 +82,8 @@
         5. Byt i ämne i panelen till höger.</p>
       </div>
   </div>
+
+    <div class="modal"></div>
 
 
     <script src="static/timeline.js"></script>
