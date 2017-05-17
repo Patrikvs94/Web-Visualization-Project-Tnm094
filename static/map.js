@@ -29,11 +29,7 @@ map.on("load", function() {
   }, 100);
     map.addSource("tweets", {
         "type": "geojson",
-        "data": {"type": "FeatureCollection", "features": collection.features}/*{
-        "type": "FeatureCollection",
-            "features": tweetsData
-    }
-*/
+        "data": {"type": "FeatureCollection", "features": collection.features}
     });
 
     //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.

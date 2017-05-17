@@ -28,6 +28,7 @@ p{
   padding-left: 0px;
   position: absolute;
   margin: 15px;
+  max-width: 20vw;
 }
 
 #menu {
@@ -38,7 +39,16 @@ p{
     right: 0px;
     font-family: Gotham-Light;
     box-shadow: -1px 0px 5px;
+}
 
+#currentTime {
+  font-size: 12px;
+  font-family: Gotham-Light;
+  margin: 10px;
+}
+#nrOfTweets {
+  font-size: 12px;
+  font-family: Gotham-Light;
 }
 
 /*.bubbles {
