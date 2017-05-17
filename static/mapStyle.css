@@ -26,7 +26,7 @@ p{
 
 #menu-list{
   padding-left: 0px;
-  position: absolute;
+  position: static;
   margin: 15px;
   max-width: 20vw;
 }

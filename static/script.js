@@ -10,7 +10,9 @@ var tweetSize = 0;
 //retrieve twitter data from python
 $(document).ready(function() {
 
+
   collection = {type :"FeatureCollection", features: [] };
+  allTheTweets = {};
 
     namespace = '/tweets'; // change to an empty string to use the global namespace
 
@@ -22,9 +24,26 @@ $(document).ready(function() {
     // event handler for server sent data
     // the data is displayed in the "Received" section of the page
     socket.on('tweet', function(msg) {
-        if (collection.features.length > 200)
-          collection.features.shift();
-          collection.features.push(msg);
+        var time = (new Date(msg.properties.time)).getMinutes();
+        if(!isNaN(time))
+        {
+          console.log(time + "inserted");
+          if (!(allTheTweets[time]))
+          {
+            allTheTweets[time] = [];
+          }
+          allTheTweets[time].push(msg);
+            //var temp = new Date(msg.properties.time);
+            //console.log(temp.getMinutes());
+        }
+        else
+        {
+          if (!(allTheTweets[msg.properties.time]))
+          {
+            allTheTweets[msg.properties.time] = [];
+          }
+          allTheTweets[msg.properties.time].push(msg);
+        }
           tweetSize = opinions[0] + opinions[1] + opinions[2];
           $("#nrOfTweets").html(tweetSize);
           countOpinions();
@@ -39,6 +58,7 @@ $(document).ready(function() {
           trenddata = msg;
           console.log(trenddata[i].name);
 
+          //calculate total tweet volume of all trends
           if(trenddata[i].tweet_volume != null) {
             tweetVolume += trenddata[i].tweet_volume;
           }
@@ -49,9 +69,7 @@ $(document).ready(function() {
           temp.id = "bubble" + i;
           temp.className = "bubbles";
           temp.innerHTML = trenddata[i].name;
-          //temp.onclick = changefilter(0);
           document.getElementById("menu-list").appendChild(temp);
-          console.log(calculateFontSize(trenddata[i].tweet_volume/tweetVolume));
           temp.style.fontSize = calculateFontSize(trenddata[i].tweet_volume/tweetVolume) + 'px';
         }
 
