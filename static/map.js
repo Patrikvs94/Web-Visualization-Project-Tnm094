@@ -15,7 +15,7 @@ var map = new mapboxgl.Map({
 });
 
 
-var colors = [["Positive", "green"],["Negative", "red"], ["Neutral", "yellow"]];
+var colors = [["Positive", "#53c653"],["Negative", "#ff3333"], ["Neutral", "#ffbf80"]];
 
 function SelectedData()
 {
