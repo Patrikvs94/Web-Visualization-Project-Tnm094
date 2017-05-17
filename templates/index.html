@@ -9,8 +9,10 @@
     <script src="//d3js.org/d3.v3.min.js"></script> <!--d3js-->
     <script src="static/jquery-3.2.0.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!-- for pie chart-->
     <script src="static/jqfloat.js"></script>
     <script src="static/script.js"></script>
+    <script src="static/piescript.js"></script> <!--script for pie chart-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet'/>
     <link href="static/mapStyle.css" rel="stylesheet"/>
@@ -23,14 +25,15 @@
             <div id="map"></div>
 
           <div id="menu"> <h1>Twiz</h1>
-              <p>Selected subject:</p>
+              <p>Se tweets live med Twiz. Välj ett trendande ämne nedan för att börja streama tweets. Valt ämne:</p>
               <div id="selectedSubject"><p id="subText"></p></div>
               <div id="subjectInfo">
                 <p id="currentTime"></><p id="nrOfTweets"></p>
-                <div id="barChart"></div>
+                <!--<div id="barChart"></div>-->
+                 <div id="piechart"></div>
               </div>
 
-              <p>Trending subjects:</p>
+              <p>Trendande ämnen just nu:</p>
               <div id="menu-list"></div>
             <!--<div class='session' id='sliderbar'>
                 <h2>Minute: <label id='active-hour'>12PM</label></h2>
@@ -42,10 +45,10 @@
               <!--<a href="#" id="dialog-trigger">?</a>-->
               <button id="infoButton">?</button>
 
-              <div class='session' id='sliderbar'>
+              <!--<div class='session' id='sliderbar'>
                   <h2>Minute: <label id='active-hour'>12PM</label></h2>
                   <input id='slider' class='row' type='range' min='0' max='59' step='1' value='29' />
-              </div>
+              </div>-->
           </div>
         </div>
     <!--</div>--><!--wrapper-->
