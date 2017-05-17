@@ -28,6 +28,7 @@ p{
   padding-left: 0px;
   position: static;
   margin: 15px;
+  max-width: 20vw;
 }
 
 #menu {
@@ -38,7 +39,16 @@ p{
     right: 0px;
     font-family: Gotham-Light;
     box-shadow: -1px 0px 5px;
+}
 
+#currentTime {
+  font-size: 12px;
+  font-family: Gotham-Light;
+  margin: 10px;
+}
+#nrOfTweets {
+  font-size: 12px;
+  font-family: Gotham-Light;
 }
 
 /*.bubbles {
@@ -280,6 +290,7 @@ p{
   background-repeat: no-repeat;
 }
 
+<<<<<<< HEAD
 #sliderbar {
   position: absolute;
   z-index: 3;
@@ -297,3 +308,5 @@ p{
   margin-top: 83vh;
 }
 /* inforuta slut*/
+=======
+>>>>>>> 26d86c8afe0198e2b889279c1a2dcd15fa96f81a

@@ -46,14 +46,22 @@ $(document).ready(function() {
         }
           tweetSize = opinions[0] + opinions[1] + opinions[2];
           $("#nrOfTweets").html(tweetSize);
+          countOpinions();
         });
 
 
       //Get trending tweets
     socket.on('trends', function(msg){
+        var tweetVolume = 0;
+
         for(var i = 0; i<10; i++) {
           trenddata = msg;
           console.log(trenddata[i].name);
+
+          //calculate total tweet volume of all trends
+          if(trenddata[i].tweet_volume != null) {
+            tweetVolume += trenddata[i].tweet_volume;
+          }
         }
         for (i = 0; i < 10; i++){
           var temp = document.createElement("div");
@@ -61,9 +69,8 @@ $(document).ready(function() {
           temp.id = "bubble" + i;
           temp.className = "bubbles";
           temp.innerHTML = trenddata[i].name;
-          //temp.onclick = changefilter(0);
           document.getElementById("menu-list").appendChild(temp);
-          temp.style.fontSize = 25 - i + 'px';
+          temp.style.fontSize = calculateFontSize(trenddata[i].tweet_volume/tweetVolume) + 'px';
         }
 
         $(function(){
@@ -98,7 +105,7 @@ $(document).ready(function() {
                   hourSize = 1;
                 if(minutes == 0)
                   minSize = 1;
-                document.getElementById("currentTime").innerHTML = 'Number of tweets since ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ':';
+                document.getElementById("currentTime").innerHTML = 'Antal tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
                 opinions = [0, 0, 0]; //Empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
@@ -147,9 +154,13 @@ $(document).ready(function() {
             changefilter(0);
           }
       }
+});
 
-      //Number of Positive, Negative and Neutral tweets
-    switch(collection.features) {
+
+function countOpinions() {
+    //Number of Positive, Negative and Neutral tweets
+    for(var i = 0; i < collection.features.length; i++)
+    switch(collection.features[i].properties.opinion) {
       case 'Positive':
           opinions[0]++;
           break;
@@ -157,9 +168,17 @@ $(document).ready(function() {
           opinions[1]++;
           break;
       case 'Negative':
-        opinions[2]++;
-        break;
+          opinions[2]++;
+          break;
+    }
 }
 
-      console.log(opinions);
-});
+//Calculate the font size of the trending subject, depending on its tweet volume
+function calculateFontSize(pro) {
+    var fontSize = pro * 100 + 5;
+    if(fontSize < 10)
+      fontSize = 10;
+    if(fontSize > 25)
+      fontSize = 25;
+    return fontSize;
+}
