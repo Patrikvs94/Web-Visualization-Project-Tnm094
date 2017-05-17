@@ -44,9 +44,25 @@ $(document).ready(function() {
           }
           allTheTweets[msg.properties.time].push(msg);
         }
+
+          //Add tweets to array opinions
+          if(selectedData() == new Date(msg.properties.time).getMinutes() || selectedData() == msg.properties.time) {
+          switch(msg.properties.opinion) {
+            case 'Positive':
+                opinions[0]++;
+                break;
+            case 'Neutral':
+                opinions[1]++;
+                break;
+            case 'Negative':
+                opinions[2]++;
+                break;
+          }
+          }
           tweetSize = opinions[0] + opinions[1] + opinions[2];
           $("#nrOfTweets").html(tweetSize);
-          countOpinions();
+          console.log(opinions);
+
         });
 
 
@@ -86,8 +102,12 @@ $(document).ready(function() {
                 //$(".bubbles").appendTo("#menu-list"); //Move old subject to menu list
                 //$(this).appendTo("#selectedSubject"); //Move sellected subject up
                 var selSub = $( this ).text();
+                var subjectField = $("#subText");
+                //$("#subText").css('display', 'none');
                 $("#subText").text(selSub);
+                //unfade(document.getElementById("subText"));
                 $(".bubbles").css('display', 'block');
+                //fade(this);
                 $(this).css('display', 'none');
                 $(this).css('bottom', '50%');
                 $(this).css('right', '50%');
@@ -131,6 +151,7 @@ $(document).ready(function() {
             });
       });
 
+//Functions and variables for the info button
       var infoBox = document.getElementById('dialog-box');
       var infoBtn = document.getElementById('infoButton');
       var span = document.getElementsByClassName("close")[0];
@@ -157,10 +178,11 @@ $(document).ready(function() {
 });
 
 
-function countOpinions() {
+function countOpinions(allTweets) {
     //Number of Positive, Negative and Neutral tweets
-    for(var i = 0; i < collection.features.length; i++)
-    switch(collection.features[i].properties.opinion) {
+    opinions = [0, 0, 0];
+    for(var i = 0; i < allTweets.length; i++)
+    switch(allTweets[i].properties.opinion) {
       case 'Positive':
           opinions[0]++;
           break;
@@ -181,4 +203,30 @@ function calculateFontSize(pro) {
     if(fontSize > 25)
       fontSize = 25;
     return fontSize;
+}
+
+function fade(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 50);
+}
+
+function unfade(element) {
+    var op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 10);
 }
