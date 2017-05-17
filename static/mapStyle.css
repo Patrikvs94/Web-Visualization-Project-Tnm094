@@ -8,8 +8,14 @@ h1 {
   margin: 10px;
   color: white;
 }
+
+h2 {
+  font-family: Gotham-Bold;
+}
+
 h3{
     font-family: Gotham-Bold;
+    margin: 10px;
 }
 
 ol{
@@ -18,10 +24,25 @@ ol{
 }
 
 
-p{
+p {
   margin: 10px;
   font-size: 12px;
   font-family: Gotham-Light;
+}
+
+@font-face {
+  font-family: Gotham-Light;
+  src: url(fonts/Gotham-Light.otf);
+}
+
+@font-face {
+  font-family: Gotham-Bold;
+  src: url(fonts/Gotham-Bold.otf);
+}
+
+@font-face {
+  font-family: Gotham-Black;
+  src: url(fonts/Gotham-Black.otf);
 }
 
 #menu-list{
@@ -46,21 +67,25 @@ p{
   font-family: Gotham-Light;
   margin: 10px;
 }
+
 #nrOfTweets {
-  font-size: 12px;
-  font-family: Gotham-Light;
+  font-size: 20 px;
+  font-family: Gotham-Bold;
+  display: block;
+  margin: 10px;
 }
 
-/*.bubbles {
-  margin: 10px;*/
-  /*text-align: center;*/
-  /*cursor: pointer;
-  padding: 10px;
-  background-color: #edeef9;
-  display: inline-block;
-  font-size: 12px;
-  list-style: none;
-}*/
+#selectedSubject {
+  width: 80%;
+  height: 90px;
+  margin: auto;
+  padding: 5px;
+  font-family: Gotham-black;
+  font-size: 20px;
+  background-image: url('images/bubble.png');
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
 
 .bubbles {
   font-family: Gotham-black;
@@ -74,21 +99,6 @@ p{
 
 }
 
-@font-face {
-  font-family: Gotham-Light;
-  src: url(fonts/Gotham-Light.otf);
-}
-
-@font-face {
-  font-family: Gotham-Bold;
-  src: url(fonts/Gotham-Bold.otf);
-}
-
-@font-face {
-  font-family: Gotham-Black;
-  src: url(fonts/Gotham-Black.otf);
-}
-
 #map {
     position: absolute;
     top:0;
@@ -99,98 +109,7 @@ p{
     display: block;
 }
 
-/*.floatable
-{
-    margin: 7px;
-    float: left;
-    display:inline-block;
-    text-align:center;
-    text-shadow:1px 1px 0px rgba(7, 82, 110, 0.41);
-    cursor:pointer;
-
-    padding: 10px;
-    position: relative;
-    z-index: 2;
-    background-color: #00aced;
-    background-image: -webkit-linear-gradient(top, rgba(0, 172, 237, 0.75), rgba(32, 197, 255, 0.65));
-    box-shadow: inset 0px 1px 0px #00a2e4, 0px 3px 0px 0px #07526e, 0px 5px 3px #999;
-    border-radius: 15px;
-
-    -webkit-animation-name: Floatingx;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -moz-animation-name: Floating;
-    -moz-animation-duration: 3s;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: ease-in-out;
-
-}*/
-
-
-
-@-webkit-keyframes Floatingx{
-    from {-webkit-transform:translate(0, 0px);}
-    65% {-webkit-transform:translate(0, 15px);}
-    to {-webkit-transform: translate(0, -0px);    }
-}
-
-@-moz-keyframes Floating{
-    from {-moz-transform:translate(0, 0px);}
-    65% {-moz-transform:translate(0, 15px);}
-    to {-moz-transform: translate(0, -0px);}
-}
-
-/* för inforutan*/
-/*.blur {
-    -webkit-filter: blur(3px);
-    -moz-filter: blur(3px);
-    filter: blur(3px);
-}
-
-.dialog-box {
-    width: 300px;
-    height: 350px;
-    background: #fff;
-    padding: 25px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -150px;
-    margin-top: -175px;
-}
-
-#dialog-trigger{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 10vh;
-    height: 10vh;
-    background: #edeef9;
-    -moz-border-radius: 5vh;
-    -webkit-border-radius: 5vh;
-    border-radius: 5vh;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 10vh;
-    margin: 10px;
-    text-decoration: none;
-    font-weight: bolder;
-    color: gray;
-
-}
-
-#dialog-trigger:hover {
-    background-color: #f7f7ff;
-}*/
-/* inforuta slut*/
-
-
-/*INFORUTA:*/
+/*INFO BOX*/
 
 /* The background when opening to info box */
 .dialog-box {
@@ -268,14 +187,20 @@ p{
   outline: 0;
 }
 
-#selectedSubject {
+/*SLIDEBAR */
+#sliderbar {
+  position: absolute;
+  z-index: 3;
   width: 80%;
-  height: 90px;
-  margin: auto;
-  padding: 5px;
-  font-family: Gotham-black;
-  font-size: 20px;
-  background-image: url('images/bubble.png');
-  background-size: auto 100%;
-  background-repeat: no-repeat;
+}
+
+#sliderbar h2 {
+  float: right;
+  margin-right: 4%;
+}
+
+#slider {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 83vh;
 }

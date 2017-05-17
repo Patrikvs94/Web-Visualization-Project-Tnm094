@@ -125,7 +125,7 @@ $(document).ready(function() {
                   hourSize = 1;
                 if(minutes == 0)
                   minSize = 1;
-                document.getElementById("currentTime").innerHTML = 'Number of tweets since ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
+                document.getElementById("currentTime").innerHTML = 'Antal tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
                 opinions = [0, 0, 0]; //Empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
