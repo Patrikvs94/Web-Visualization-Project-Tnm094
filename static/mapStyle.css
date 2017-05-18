@@ -90,6 +90,7 @@ p {
 
 .bubbles:hover {
   color: #edeef9;
+  cursor: pointer;
 }
 
 
@@ -177,6 +178,7 @@ p {
 
 #infoButton:hover {
     background-color: #f7f7ff;
+    cursor: pointer;
 }
 
 #infoButton:focus {

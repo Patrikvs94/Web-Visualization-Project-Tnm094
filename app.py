@@ -2,6 +2,7 @@
 from gevent import monkey;
 monkey.patch_all()
 
+#import frameworks and libraries
 import gevent
 import os
 from flask import Flask, render_template, request, jsonify
@@ -57,14 +58,14 @@ class TwitterWatchDog:
             self.streamer.disconnect()
             self.green.kill()
             # then reload
-            print "-------> entering dog !!!!!!!!!"
             self.__init__(subject)
 
 
-trends = twitter.get_place_trends(id=1)[0]['trends']
+trends = twitter.get_place_trends(id=1)[0]['trends'] #get trending subjects
 #for trend in trends:
     #print urllib.unquote(urllib.unquote(trend['query']))
-subject = ''
+
+subject = '' #the chosen subject
 
 @app.route('/')
 def index():
@@ -84,7 +85,7 @@ def process():
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
-
+#collecting tweets with Twitters streaming API
 def collect_tweets_data_stream(sub):
     print(random.randint(1, 10))
     dog = TwitterWatchDog(sub)
@@ -103,17 +104,17 @@ def collect_tweets_data_stream(sub):
                 coordinates.append(tweet_location['longitude']+0.0001*random.randint(1, 10))
                 coordinates.append(tweet_location['latitude']+0.0001*random.randint(1, 10))
                 print(coordinates[1]);
-                # ordanalys
+                # word analysis
 
                 #to randomize a senitment value
                 rand_sent = ['Positive', 'Negative', 'Neutral']
-
                 temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': "live" }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
 
     print sub + ' is no longer the subject'
 
+#collecting tweets with Twitters REST API
 def collect_tweets_data_rest(sub):
     query = sub + ' filter:safe'
     results = twitter.cursor(twitter.search, q=query, result_type='recent', count='100')
@@ -124,18 +125,15 @@ def collect_tweets_data_rest(sub):
         for tweet in results:
             tweet_location = tweet_has_location(tweet)
             if tweet_location['exist']:
-                #print tweet['created_at']
-                #print tweet['text']
-                #print counter
+
                 coordinates = []
                 coordinates.append(tweet_location['longitude']+0.001*random.randint(1, 10))
                 coordinates.append(tweet_location['latitude']+0.001*random.randint(1, 10))
-                # ordanalys
+                # word analysis
 
                 #to randomize a senitment value
                 rand_sent = ['Positive', 'Negative', 'Neutral']
                 temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': tweet['created_at'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                #print tweet['text'].encode('cp850', errors='replace')
                 print tweet['created_at']
                 print tweet['text'].encode('cp850', errors='replace')
                 socketio.emit('tweet', temp, namespace='/tweets')
@@ -161,15 +159,11 @@ def tweet_has_location(tweet):
 
 @socketio.on('connect', namespace='/tweets')
 def tweets_connect():
-    #dog.check_alive()
-    #uid = request.namespace.socket.sessid
     print('Client connected')
     emit('trends', trends, broadcast=True)
 
 @socketio.on('disconnect', namespace='/tweets')
 def tweets_disconnect():
-    #dog.check_alive()
-    #uid = request.namespace.socket.sessid
     print('Client disconnected')
 
 if __name__ == '__main__':

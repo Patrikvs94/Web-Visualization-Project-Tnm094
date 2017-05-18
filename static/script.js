@@ -2,7 +2,7 @@
 /* GLOBAL VARIABLES */
 var trenddata = {}; //save trend.json to a variable trenddata
 var subject = ""; //the current subject displayed
-var opinions = [0, 0, 0]; //opinions in the order: Positive, Neutral, Negative
+var opinions = [0, 0, 0, 1]; //opinions in the order: Positive, Neutral, Negative
 var tweetSize = 0; //the tweet volume of the subject
 
 $(document).ready(function() {
@@ -124,7 +124,7 @@ $(document).ready(function() {
                   minSize = 1;
                 //set currentTime to the time the subject was clicked
                 document.getElementById("currentTime").innerHTML = 'Tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
-                opinions = [0, 0, 0]; //empty opinon-list when a new subject is sellected
+                opinions = [0, 0, 0, 0]; //empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
                 collection.features = [];
@@ -178,7 +178,7 @@ $(document).ready(function() {
 
 //Calculate number of Positive, Neutral and Negative tweets
 function countOpinions(allTweets) {
-    opinions = [0, 0, 0]; //set all opinons to 0
+    opinions = [0, 0, 0, 0]; //set all opinons to 0
 
     for(var i = 0; i < allTweets.length; i++){
       switch(allTweets[i].properties.opinion) {
