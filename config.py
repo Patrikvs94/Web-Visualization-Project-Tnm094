@@ -1,15 +1,6 @@
 CONF = {
-<<<<<<< HEAD
     "APP_KEY": "obGhx6A4D654nGucj3zqQXagS",
     "APP_SECRET": "JbAOIbyUjfLG2fGx6ELGUewIRBeq4POrHbwhIUo0AR2JwXDI25",
     "OAUTH_TOKEN": "828544457918267393-0IwrNAStjMvOQjFj3zrmWneF3NcJ9Yt",
     "OAUTH_TOKEN_SECRET": "hqzEk61izCcbQ1m8ZnJlgmpHPakFMuqppFESmKGwMBP9E",
-=======
-    "APP_KEY": "Xg9l0aRFAGzYzCtvAvMscfGgd", #"7PIDujS6A8ZsxgGbYIowfOL1s",
-        "APP_SECRET": "u3tAvujXKOVcjLeW2LqjHTFr9rJyNo3oNkK1quELLbflX9eaC0", #"QlKKNvIAR9mFqJRHM8JXaJbJ2VvISOcAZQeb5Zjd4scirmiXBh",
-        "OAUTH_TOKEN": "828544457918267393-tEgmHBTJQWhkMU7FaXPq6YT7Tu27O2L", #"828544457918267393-6uopKW9Ztef0jZ2i6FDMQkwg0mNq178",
-        "OAUTH_TOKEN_SECRET": "qMk0XdpAeSKMqbM3zwGmxUDA1131bn3MOAOjYoheaKFYq", #"rqp7ozjS3xknZlIrZMSqKpJH97lkmfuJm86prcPTfNYi0",
-
->>>>>>> origin/master
-    "KEYWORD": "#cats"
 }
