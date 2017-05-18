@@ -5,10 +5,6 @@ var subject = ""; //the current subject displayed
 var opinions = [0, 0, 0]; //opinions in the order: Positive, Neutral, Negative
 var tweetSize = 0; //the tweet volume of the subject
 
-
-
-
-
 $(document).ready(function() {
 
   //retrieve twitter data from python
@@ -28,7 +24,7 @@ $(document).ready(function() {
         var time = (new Date(msg.properties.time)).getMinutes();
         if(!isNaN(time))
         {
-          console.log(time + "inserted");
+          //console.log(time + "inserted");
           if (!(allTheTweets[time]))
           {
             allTheTweets[time] = [];
