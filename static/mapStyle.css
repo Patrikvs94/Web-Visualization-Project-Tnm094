@@ -59,7 +59,7 @@ p {
     position: absolute;
     right: 0px;
     font-family: Gotham-Light;
-    box-shadow: -1px 0px 5px;
+   /* box-shadow: -1px 0px 5px;*/
 }
 
 #currentTime {
@@ -115,7 +115,7 @@ p {
 .dialog-box {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 2; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -187,10 +187,11 @@ p {
   outline: 0;
 }
 
+
 /*SLIDEBAR */
 #sliderbar {
   position: absolute;
-  z-index: 3;
+  z-index: 1;
   width: 80%;
 }
 
@@ -204,3 +205,72 @@ p {
   margin-left: 5%;
   margin-top: 83vh;
 }
+
+
+/*BAR CHART*/
+#barChart {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+#selectedSubject {
+  width: 80%;
+  height: 90px;
+  margin: auto;
+  padding: 5px;
+  font-family: Gotham-black;
+  font-size: 20px;
+  background-image: url('images/bubble.png');
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+
+#selectedSubject p{
+  font-size: medium;
+}
+
+
+/* PRATBUBBLA*/
+p.speech {
+  font-size: x-large;
+  position: relative;
+  width: 80%;
+  margin: 15px;
+  height: 80px;
+  text-align: center;
+  line-height: 80px; /* hänger ihop med height för p.speech. för att centrera text */
+  background-color: #fff;
+  border: 2px solid #666;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
+
+/* mörk del*/
+p.speech:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 38px;
+  top: 80px; /* hänger ihop med height för p.speech */
+  border: 11px solid;
+  border-color: #666 transparent transparent #666;
+}
+
+/* vit del*/
+p.speech:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 40px;
+  top: 78px; /* hänger ihop med height för p.speech */
+  border: 10px solid;
+  border-color: #fff transparent transparent #fff;
+}
+/* PRATBUBBLE SLUT */

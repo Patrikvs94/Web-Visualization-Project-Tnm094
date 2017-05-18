@@ -11,11 +11,12 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/sovanny/cizgswpga00to2sqz9xcdew48', //stylesheet location
     center: [0, 50], // starting position
     zoom: 1, // starting zoom
-    maxBounds: bounds
+    maxBounds: bounds,
+    interactive: true
 });
 
 
-var colors = [["Positive", "green"],["Negative", "red"], ["Neutral", "yellow"]];
+var colors = [["Positive", "#53c653"],["Negative", "#ff3333"], ["Neutral", "#ffbf80"]];
 
 
 //Load map with source and layers

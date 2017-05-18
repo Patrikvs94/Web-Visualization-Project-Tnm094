@@ -61,9 +61,19 @@ $(document).ready(function() {
           }
           tweetSize = opinions[0] + opinions[1] + opinions[2];
           $("#nrOfTweets").html(tweetSize);
-          console.log(opinions);
+        //if(tweetSize > 20)
+        //{
+        $('#loader').hide();
+        changefilter(0);
+        map.setInteractive = false;
+        //}
+
+
+          countOpinions();
 
         });
+
+
 
 
       //Get trending tweets
@@ -94,6 +104,10 @@ $(document).ready(function() {
             //When bubbles are clicked
             $('.bubbles').click(function()
             {
+                console.log("Går in i funktion");
+                $('#loader').show();
+                changefilter(5);
+                $('map').css('-webkit-filter', 'blur(3px)');
               console.log(collection.features);
 
 
@@ -159,20 +173,20 @@ $(document).ready(function() {
       // When the user clicks the button, open the info box
       infoBtn.onclick = function() {
         infoBox.style.display = "block";
-        changefilter(5);
+        changefilterInfo(5);
       }
 
       // When the user clicks on <span> (x), close the info box
       span.onclick = function() {
           infoBox.style.display = "none";
-          changefilter(0);
+          changefilterInfo(0);
       }
 
       // When the user clicks anywhere outside of the modal, close it
       window.onclick = function(event) {
           if(event.target == infoBox) {
             infoBox.style.display = "none";
-            changefilter(0);
+            changefilterInfo(0);
           }
       }
 });
