@@ -22,12 +22,12 @@
     <div id="map"></div>
 
     <div class='session' id='sliderbar'>
-      <h2>Time: <label id='active-minute'>Live</label></h2>
-      <input id='slider' class='row' type='range' min='1' max='60' step='1' value='60' />
+        <input id='slider' class='row' type='range' min='1' max='60' step='1' value='60' />
+        <span class="range-slider__value">0</span>
     </div>
 
     <!-- Sidebar -->
-    <div id="menu"> 
+    <div id="menu">
       <h1 onClick="window.location.reload()">Twiz</h1>
       <p>Se tweets live med Twiz. Välj ett trendande ämne nedan för att börja streama tweets. Valt ämne:</p>
       <p id="subText" class="speech"></p>
@@ -35,18 +35,18 @@
       <!-- Number of tweets -->
       <div id="subjectInfo">
         <span id="currentTime"></span>
-        <span id="nrOfTweets"></span>   
+        <span id="nrOfTweets"></span>
         <div id="piechart"></div>
       </div>
 
       <p>Trendande ämnen just nu:</p>
       <div id="menu-list"></div>
-    
+
       <!-- The trigger element for the dialog box-->
       <button id="infoButton">?</button>
     </div><!--menu-->
   </div><!--blurmap-->
-  
+
 
 
   <!-- The dialog box -->
