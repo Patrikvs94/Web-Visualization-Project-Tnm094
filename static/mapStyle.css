@@ -294,6 +294,7 @@ p{
   position: absolute;
   z-index: 3;
   width: 80%;
+  margin-top: 93vh;
 }
 
 #sliderbar h2 {
@@ -304,7 +305,6 @@ p{
 #slider {
   width: 85%;
   margin-left: 2%;
-  margin-top: 93vh;
 }
 
 .range-slider__value
