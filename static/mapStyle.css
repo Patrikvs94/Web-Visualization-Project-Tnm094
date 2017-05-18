@@ -62,6 +62,10 @@ p {
    /* box-shadow: -1px 0px 5px;*/
 }
 
+#subjectInfo{
+  padding-top: 20px;
+}
+
 #currentTime {
   font-size: 12px;
   font-family: Gotham-Light;
@@ -71,25 +75,15 @@ p {
 #nrOfTweets {
   font-size: 20 px;
   font-family: Gotham-Bold;
-  display: block;
+  /*display: block;*/
   margin: 10px;
-}
-
-#selectedSubject {
-  width: 80%;
-  height: 90px;
-  margin: auto;
-  padding: 5px;
-  font-family: Gotham-black;
-  font-size: 20px;
-  background-image: url('images/bubble.png');
-  background-size: auto 100%;
-  background-repeat: no-repeat;
 }
 
 .bubbles {
   font-family: Gotham-black;
-  padding: 3px;
+  padding-bottom: 8px;
+
+  padding-right: 10px;
   display: inline-block;
 
 }
@@ -207,32 +201,6 @@ p {
 }
 
 
-/*BAR CHART*/
-#barChart {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
-
-#selectedSubject {
-  width: 80%;
-  height: 90px;
-  margin: auto;
-  padding: 5px;
-  font-family: Gotham-black;
-  font-size: 20px;
-  background-image: url('images/bubble.png');
-  background-size: auto 100%;
-  background-repeat: no-repeat;
-}
-
-#selectedSubject p{
-  font-size: medium;
-}
-
 
 /* PRATBUBBLA*/
 p.speech {
@@ -274,3 +242,9 @@ p.speech:after {
   border-color: #fff transparent transparent #fff;
 }
 /* PRATBUBBLE SLUT */
+
+/* PIE CHART */
+#piechart {
+  width: 50%;
+  margin: 0 auto;
+}

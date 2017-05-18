@@ -25,7 +25,7 @@ function drawChart() {
     backgroundColor: { fill:'transparent' },
     legend: 'none',
     pieSliceText: 'label',
-    chartArea: {width: '100%', height: '80%'},
+    chartArea: {width: '100%', height: '100%'},
     width: 'inherit',
     height: 'auto',
     slices: {

@@ -93,9 +93,6 @@ $(document).ready(function() {
         map.setInteractive = false;
         //}
 
-
-          countOpinions();
-
         });
 
 
@@ -145,11 +142,11 @@ $(document).ready(function() {
                 //$("#subText").css('display', 'none');
                 $("#subText").text(selSub);
                 //unfade(document.getElementById("subText"));
-                $(".bubbles").css('display', 'block');
+                $(".bubbles").css('display', 'inline-block');
                 //fade(this);
                 $(this).css('display', 'none');
-                $(this).css('bottom', '50%');
-                $(this).css('right', '50%');
+                /*$(this).css('bottom', '50%');
+                $(this).css('right', '50%');*/
                 $("#nrOfTweets").html(0); //Set number of tweets to 0 when new subject is sellected
 
 
@@ -164,7 +161,7 @@ $(document).ready(function() {
                   hourSize = 1;
                 if(minutes == 0)
                   minSize = 1;
-                document.getElementById("currentTime").innerHTML = 'Antal tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
+                document.getElementById("currentTime").innerHTML = 'Tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
                 opinions = [0, 0, 0]; //Empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
