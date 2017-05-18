@@ -4,7 +4,7 @@ var angle = 0;
 //sparar trend.json till en variabel trenddata
 var trenddata = {};
 var subject = "";
-var opinions = [0, 0, 0]; //Positive, Neutral, Negative
+var opinions = [0, 0, 0, 1]; //Positive, Neutral, Negative
 var tweetSize = 0;
 
 
@@ -145,7 +145,7 @@ $(document).ready(function() {
                 if(minutes == 0)
                   minSize = 1;
                 document.getElementById("currentTime").innerHTML = 'Antal tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
-                opinions = [0, 0, 0]; //Empty opinon-list when a new subject is sellected
+                opinions = [0, 0, 0, 0]; //Empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
                 collection.features = [];

@@ -16,7 +16,8 @@ function drawChart() {
     ['Attityd', 'Antal'],
     ['Positiv',     opinions[0]],
     ['Negative', opinions[2]],
-    ['Neutral',    opinions[1]]
+    ['Neutral',    opinions[1]],
+    ['Välj en trend för att visa attityd', opinions[3]]
     
   ]);
 
@@ -33,7 +34,8 @@ function drawChart() {
     slices: {
             0: { color: '#79d279' },
             1: { color: '#ff6666' },
-            3: { color: '#ffd9b3'}
+            2: { color: '#ffd9b3'},
+            3: {color: '#4db8ff'}
           }
     //legend: {position: 'bottom'}
   };
