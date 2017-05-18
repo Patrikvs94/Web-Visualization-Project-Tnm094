@@ -194,12 +194,12 @@ p {
 #sliderbar h2 {
   float: right;
   margin-right: 4%;
+  margin-top: 93vh;
 }
 
 #slider {
   width: 90%;
   margin-left: 5%;
-  margin-top: 83vh;
 }
 
 
