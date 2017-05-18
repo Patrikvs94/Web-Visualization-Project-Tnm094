@@ -23,39 +23,38 @@ var map = new mapboxgl.Map({
 //Load map with source and layers
 map.on("load", function() {
 
-  window.setInterval(function()
-  {
-      minute = selectedData();
+    window.setInterval(function(){
 
-      if(allTheTweets[minute])
-        map.getSource("tweets").setData({"type": "FeatureCollection", "features": allTheTweets[minute] });
-      else {
+        minute = selectedData();
+
+        if(allTheTweets[minute])
+            map.getSource("tweets").setData({"type": "FeatureCollection", "features": allTheTweets[minute] });
+        else{
         map.getSource("tweets").setData({"type": "FeatureCollection", "features": [] });
-      }
-  }, 100);
+        }
+
+    }, 100);
+    
     map.addSource("tweets", {
         "type": "geojson",
         "data": {"type": "FeatureCollection", "features": collection.features}
     });
 
-        //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
-        colors.forEach(function(colors) {
-            map.addLayer({
-                "id": "opinionis" + colors[0],
-                "type": "circle",
-                "source":"tweets",
-                "paint": {
-                    "circle-radius": 10,
-                    "circle-color": colors[1],
-                    "circle-opacity": 0.5,
-                    "circle-blur": 0.5
-                },
-                "filter": ["==", "opinion", colors[0]]
-
-
-            })
+    //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
+    colors.forEach(function(colors) {
+        map.addLayer({
+            "id": "opinionis" + colors[0],
+            "type": "circle",
+            "source":"tweets",
+            "paint": {
+                "circle-radius": 10,
+                "circle-color": colors[1],
+                "circle-opacity": 0.5,
+                "circle-blur": 0.5
+            },
+            "filter": ["==", "opinion", colors[0]]
         })
-
+    })
 });
 
 
@@ -65,9 +64,8 @@ map.on('click', function (e) {
 
     var features = map.queryRenderedFeatures(e.point, { layers: ["opinionisPositive", "opinionisNegative", "opinionisNeutral"] });
 
-    if (!features.length) {
+    if (!features.length)
         return;
-    }
 
     var feature = features[0];
 
@@ -79,14 +77,12 @@ map.on('click', function (e) {
         .setHTML("<div id='container'></div>")
         .addTo(map);
 
-        //When clicked show the right twitter widget
-        var twtt = twttr.widgets.createTweet(
-            feature.properties.id,
-            document.getElementById('container'), {
-                width: "300"
-            }
-        );
-
+    //When clicked show the right twitter widget
+    var twtt = twttr.widgets.createTweet(
+        feature.properties.id,
+        document.getElementById('container'), 
+        { width: "300"}
+    );
 });
 
 // Use the same approach as above to indicate that the symbols are clickable

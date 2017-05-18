@@ -1,8 +1,7 @@
-
 /* GLOBAL VARIABLES */
 var trenddata = {}; //save trend.json to a variable trenddata
 var subject = ""; //the current subject displayed
-var opinions = [0, 0, 0]; //opinions in the order: Positive, Neutral, Negative
+var opinions = [0, 0, 0, 1]; //opinions in the order: Positive, Neutral, Negative
 var tweetSize = 0; //the tweet volume of the subject
 
 $(document).ready(function() {
@@ -13,58 +12,55 @@ $(document).ready(function() {
 
   namespace = '/tweets'; // change to an empty string to use the global namespace
 
-    // the socket.io documentation recommends sending an explicit package upon connection
-    // this is specially important when using the global namespace
-    var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
-    //  var socketProcess = io.connect('//' + document.domain + ':' + location.port + '/process');
+  // the socket.io documentation recommends sending an explicit package upon connection
+  // this is specially important when using the global namespace
+  var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
+  //  var socketProcess = io.connect('//' + document.domain + ':' + location.port + '/process');
 
-    // event handler for server sent data
-    // the data is displayed in the "Received" section of the page
-    socket.on('tweet', function(msg) {
-        var time = (new Date(msg.properties.time)).getMinutes();
-        if(!isNaN(time))
-        {
-          //console.log(time + "inserted");
-          if (!(allTheTweets[time]))
-          {
-            allTheTweets[time] = [];
-          }
-          allTheTweets[time].push(msg);
+  // event handler for server sent data
+  // the data is displayed in the "Received" section of the page
+  socket.on('tweet', function(msg) {
+    var time = (new Date(msg.properties.time)).getMinutes();
+    if(!isNaN(time))
+    {
+      //console.log(time + "inserted");
+      if (!(allTheTweets[time]))
+      {
+        allTheTweets[time] = [];
+      }
+      allTheTweets[time].push(msg);
+    }
+    else
+    {
+      if (!(allTheTweets[msg.properties.time]))
+      {
+        allTheTweets[msg.properties.time] = [];
+      }
+      allTheTweets[msg.properties.time].push(msg);
+    }
+
+      //Add tweets to array opinions
+      if(selectedData() == new Date(msg.properties.time).getMinutes() || selectedData() == msg.properties.time) {
+        switch(msg.properties.opinion) {
+          case 'Positive':
+              opinions[0]++;
+              break;
+          case 'Neutral':
+              opinions[1]++;
+              break;
+          case 'Negative':
+              opinions[2]++;
+              break;
         }
-        else
-        {
-          if (!(allTheTweets[msg.properties.time]))
-          {
-            allTheTweets[msg.properties.time] = [];
-          }
-          allTheTweets[msg.properties.time].push(msg);
-        }
+      }
+      tweetSize = opinions[0] + opinions[1] + opinions[2]; //total number of tweets
+      $("#nrOfTweets").html(tweetSize); //set nrOfTweets to the number of tweets for the selected subject
 
-          //Add tweets to array opinions
-          if(selectedData() == new Date(msg.properties.time).getMinutes() || selectedData() == msg.properties.time) {
-            switch(msg.properties.opinion) {
-              case 'Positive':
-                  opinions[0]++;
-                  break;
-              case 'Neutral':
-                  opinions[1]++;
-                  break;
-              case 'Negative':
-                  opinions[2]++;
-                  break;
-            }
-          }
-          tweetSize = opinions[0] + opinions[1] + opinions[2]; //total number of tweets
-          $("#nrOfTweets").html(tweetSize); //set nrOfTweets to the number of tweets for the selected subject
-
-          //hide loader and unblur map when tweets are showing
-          $('#loader').hide();
-          changefilter(0);
-          map.setInteractive = false;
-      });
-
-
-
+      //hide loader and unblur map when tweets are showing
+      $('#loader').hide();
+      changefilter(0);
+      map.setInteractive = false;
+    });
 
     //Get top 10 trending tweets
     socket.on('trends', function(msg){
@@ -124,7 +120,7 @@ $(document).ready(function() {
                   minSize = 1;
                 //set currentTime to the time the subject was clicked
                 document.getElementById("currentTime").innerHTML = 'Tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
-                opinions = [0, 0, 0]; //empty opinon-list when a new subject is sellected
+                opinions = [0, 0, 0, 0]; //empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
                 collection.features = [];
@@ -178,7 +174,7 @@ $(document).ready(function() {
 
 //Calculate number of Positive, Neutral and Negative tweets
 function countOpinions(allTweets) {
-    opinions = [0, 0, 0]; //set all opinons to 0
+    opinions = [0, 0, 0, 0]; //set all opinons to 0
 
     for(var i = 0; i < allTweets.length; i++){
       switch(allTweets[i].properties.opinion) {
