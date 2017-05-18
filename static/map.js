@@ -1,10 +1,14 @@
-//Load map
+//The max view of the map
 var bounds = [
     [-170, -60], // Southwest coordinates
     [180, 80    ]  // Northeast coordinates
 ];
 
+//Colors of the markers
+var colors = [["Positive", "#53c653"],["Negative", "#ff3333"], ["Neutral", "#ffbf80"]];
 
+
+//Load map
 mapboxgl.accessToken = 'pk.eyJ1Ijoic292YW5ueSIsImEiOiJjaXpnc3YxYTAwMDI0MzNvMzI0am13cmNuIn0.nXZ_-XK8THtmYTIQosey1w';
 var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -16,32 +20,25 @@ var map = new mapboxgl.Map({
 });
 
 
-var colors = [["Positive", "#53c653"],["Negative", "#ff3333"], ["Neutral", "#ffbf80"]];
-
-
 //Load map with source and layers
 map.on("load", function() {
-    //Add a source with tweets
+
   window.setInterval(function()
   {
-    /*
-    map.getSource("tweets").setData({"type": "FeatureCollection", "features": collection.features});
-    */
-      minute = SelectedData();
+      minute = selectedData();
 
       if(allTheTweets[minute])
         map.getSource("tweets").setData({"type": "FeatureCollection", "features": allTheTweets[minute] });
       else {
         map.getSource("tweets").setData({"type": "FeatureCollection", "features": [] });
       }
-    //console.log("updated data");
   }, 100);
     map.addSource("tweets", {
         "type": "geojson",
         "data": {"type": "FeatureCollection", "features": collection.features}
     });
 
-    //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
+        //Add layers for different opinions. Red if negative, green if positive and yellow if neutral.
         colors.forEach(function(colors) {
             map.addLayer({
                 "id": "opinionis" + colors[0],
@@ -73,9 +70,6 @@ map.on('click', function (e) {
     }
 
     var feature = features[0];
-
-
-
 
     // Populate the popup and set its coordinates
     // based on the feature found.

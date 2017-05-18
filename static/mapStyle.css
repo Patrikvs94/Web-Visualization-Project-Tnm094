@@ -30,6 +30,7 @@ p {
   font-family: Gotham-Light;
 }
 
+/* FONTS */
 @font-face {
   font-family: Gotham-Light;
   src: url(fonts/Gotham-Light.otf);
@@ -45,6 +46,8 @@ p {
   src: url(fonts/Gotham-Black.otf);
 }
 
+
+/* MENU */
 #menu-list{
   padding-left: 0px;
   position: static;
@@ -59,7 +62,6 @@ p {
     position: absolute;
     right: 0px;
     font-family: Gotham-Light;
-   /* box-shadow: -1px 0px 5px;*/
 }
 
 #subjectInfo{
@@ -75,24 +77,23 @@ p {
 #nrOfTweets {
   font-size: 20 px;
   font-family: Gotham-Bold;
-  /*display: block;*/
   margin: 10px;
 }
 
+/*trending subjects*/
 .bubbles {
   font-family: Gotham-black;
   padding-bottom: 8px;
-
   padding-right: 10px;
   display: inline-block;
-
 }
 
 .bubbles:hover {
   color: #edeef9;
-
 }
 
+
+/* MAP */
 #map {
     position: absolute;
     top:0;
@@ -103,8 +104,8 @@ p {
     display: block;
 }
 
-/*INFO BOX*/
 
+/*INFO BOX*/
 /* The background when opening to info box */
 .dialog-box {
     display: none; /* Hidden by default */
@@ -137,7 +138,7 @@ p {
     margin-top: -175px;
 }
 
-/* The Close Button */
+/* Close button for info box*/
 .close {
     color: #aaaaaa;
     float: right;
@@ -152,7 +153,8 @@ p {
     cursor: pointer;
 }
 
-/*Info button*/
+
+/*INFO BUTTON*/
 #infoButton {
     position: absolute;
     right: 0;
@@ -201,8 +203,7 @@ p {
 }
 
 
-
-/* PRATBUBBLA*/
+/* SPEECH BUBBLE*/
 p.speech {
   font-size: x-large;
   position: relative;
@@ -218,7 +219,7 @@ p.speech {
   border-radius: 30px;
 }
 
-/* mörk del*/
+/* dark part*/
 p.speech:before {
   content: ' ';
   position: absolute;
@@ -230,7 +231,7 @@ p.speech:before {
   border-color: #666 transparent transparent #666;
 }
 
-/* vit del*/
+/* white part*/
 p.speech:after {
   content: ' ';
   position: absolute;
@@ -241,7 +242,7 @@ p.speech:after {
   border: 10px solid;
   border-color: #fff transparent transparent #fff;
 }
-/* PRATBUBBLE SLUT */
+
 
 /* PIE CHART */
 #piechart {

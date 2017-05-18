@@ -1,50 +1,26 @@
-var angle = 0;
+
+/* GLOBAL VARIABLES */
+var trenddata = {}; //save trend.json to a variable trenddata
+var subject = ""; //the current subject displayed
+var opinions = [0, 0, 0]; //opinions in the order: Positive, Neutral, Negative
+var tweetSize = 0; //the tweet volume of the subject
 
 
-//sparar trend.json till en variabel trenddata
-var trenddata = {};
-var subject = "";
-var opinions = [0, 0, 0]; //Positive, Neutral, Negative
-var tweetSize = 0;
 
 
-var currentdate = new Date();
-var timeShift = 59- currentdate.getMinutes();
-console.log(currentdate.getHours() + ":" + currentdate.getMinutes());
 
-
-function SelectedData()
-{
-  if(parseInt(document.getElementById('slider').value) < 60)
-  {
-    var minute = parseInt(document.getElementById('slider').value)- timeShift;
-    var hour = currentdate.getHours();
-    if(minute < 0 )
-    {
-      hour--;
-      minute+=60;
-    }
-    return minute;
-  }
-  else
-  {
-    return "live";
-  }
-}
-
-//retrieve twitter data from python
 $(document).ready(function() {
 
-
+  //retrieve twitter data from python
   collection = {type :"FeatureCollection", features: [] };
   allTheTweets = {};
 
-    namespace = '/tweets'; // change to an empty string to use the global namespace
+  namespace = '/tweets'; // change to an empty string to use the global namespace
 
     // the socket.io documentation recommends sending an explicit package upon connection
     // this is specially important when using the global namespace
     var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
-  //  var socketProcess = io.connect('//' + document.domain + ':' + location.port + '/process');
+    //  var socketProcess = io.connect('//' + document.domain + ':' + location.port + '/process');
 
     // event handler for server sent data
     // the data is displayed in the "Received" section of the page
@@ -58,8 +34,6 @@ $(document).ready(function() {
             allTheTweets[time] = [];
           }
           allTheTweets[time].push(msg);
-            //var temp = new Date(msg.properties.time);
-            //console.log(temp.getMinutes());
         }
         else
         {
@@ -72,35 +46,33 @@ $(document).ready(function() {
 
           //Add tweets to array opinions
           if(selectedData() == new Date(msg.properties.time).getMinutes() || selectedData() == msg.properties.time) {
-          switch(msg.properties.opinion) {
-            case 'Positive':
-                opinions[0]++;
-                break;
-            case 'Neutral':
-                opinions[1]++;
-                break;
-            case 'Negative':
-                opinions[2]++;
-                break;
+            switch(msg.properties.opinion) {
+              case 'Positive':
+                  opinions[0]++;
+                  break;
+              case 'Neutral':
+                  opinions[1]++;
+                  break;
+              case 'Negative':
+                  opinions[2]++;
+                  break;
+            }
           }
-          }
-          tweetSize = opinions[0] + opinions[1] + opinions[2];
-          $("#nrOfTweets").html(tweetSize);
-        //if(tweetSize > 20)
-        //{
-        $('#loader').hide();
-        changefilter(0);
-        map.setInteractive = false;
-        //}
+          tweetSize = opinions[0] + opinions[1] + opinions[2]; //total number of tweets
+          $("#nrOfTweets").html(tweetSize); //set nrOfTweets to the number of tweets for the selected subject
 
-        });
+          //hide loader and unblur map when tweets are showing
+          $('#loader').hide();
+          changefilter(0);
+          map.setInteractive = false;
+      });
 
 
 
 
-      //Get trending tweets
+    //Get top 10 trending tweets
     socket.on('trends', function(msg){
-        var tweetVolume = 0;
+        var tweetVolume = 0; //tweetvolume of all subjects
 
         for(var i = 0; i<10; i++) {
           trenddata = msg;
@@ -112,42 +84,35 @@ $(document).ready(function() {
           }
         }
         for (i = 0; i < 10; i++){
-          var temp = document.createElement("div");
+          var temp = document.createElement("div"); //create div element for every subject
 
           temp.id = "bubble" + i;
           temp.className = "bubbles";
           temp.innerHTML = trenddata[i].name;
-          document.getElementById("menu-list").appendChild(temp);
+          document.getElementById("menu-list").appendChild(temp); //add subject-elements to "menu-list"
+          //calculate the font size of the subjects depending on tweet volume
           temp.style.fontSize = calculateFontSize(trenddata[i].tweet_volume/tweetVolume) + 'px';
         }
 
         $(function(){
-            var expanded = false;
+
             //When bubbles are clicked
             $('.bubbles').click(function()
             {
+                //show loader and blur map
                 console.log("Går in i funktion");
                 $('#loader').show();
                 changefilter(5);
                 $('map').css('-webkit-filter', 'blur(3px)');
-              console.log(collection.features);
 
+                console.log(collection.features);
 
-                //$(".bubbles").css('box-shadow', 'none');
-                //$(this).css('box-shadow', '0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5)');
-                //$(".bubbles").appendTo("#menu-list"); //Move old subject to menu list
-                //$(this).appendTo("#selectedSubject"); //Move sellected subject up
-                var selSub = $( this ).text();
+                var selSub = $( this ).text(); //get the selected subject
                 var subjectField = $("#subText");
-                //$("#subText").css('display', 'none');
-                $("#subText").text(selSub);
-                //unfade(document.getElementById("subText"));
-                $(".bubbles").css('display', 'inline-block');
-                //fade(this);
-                $(this).css('display', 'none');
-                /*$(this).css('bottom', '50%');
-                $(this).css('right', '50%');*/
-                $("#nrOfTweets").html(0); //Set number of tweets to 0 when new subject is sellected
+                $("#subText").text(selSub); //set subText to the selected subject (the speech bubble)
+                $(".bubbles").css('display', 'inline-block'); //show all trending tweets (the one hidden are displayed)
+                $(this).css('display', 'none'); //hide the chosen subject
+                $("#nrOfTweets").html(0); //set number of tweets to 0 when new subject is sellected
 
 
                 //Display current time, and allways with two digits
@@ -161,11 +126,13 @@ $(document).ready(function() {
                   hourSize = 1;
                 if(minutes == 0)
                   minSize = 1;
+                //set currentTime to the time the subject was clicked
                 document.getElementById("currentTime").innerHTML = 'Tweets sedan ' + zeros.slice(hourSize) + hours + ':' + zeros.slice(minSize) + minutes + ': ';
-                opinions = [0, 0, 0]; //Empty opinon-list when a new subject is sellected
+                opinions = [0, 0, 0]; //empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
                 collection.features = [];
+
 
                 //Retrieve data from python and send data to python
                 $.ajax({
@@ -192,19 +159,19 @@ $(document).ready(function() {
       var infoBtn = document.getElementById('infoButton');
       var span = document.getElementsByClassName("close")[0];
 
-      // When the user clicks the button, open the info box
+      //when the user clicks the button, open the info box
       infoBtn.onclick = function() {
         infoBox.style.display = "block";
         changefilterInfo(5);
       }
 
-      // When the user clicks on <span> (x), close the info box
+      //when the user clicks on <span> (x), close the info box
       span.onclick = function() {
           infoBox.style.display = "none";
           changefilterInfo(0);
       }
 
-      // When the user clicks anywhere outside of the modal, close it
+      //when the user clicks anywhere outside of the modal, close it
       window.onclick = function(event) {
           if(event.target == infoBox) {
             infoBox.style.display = "none";
@@ -213,25 +180,27 @@ $(document).ready(function() {
       }
 });
 
-
+//Calculate number of Positive, Neutral and Negative tweets
 function countOpinions(allTweets) {
-    //Number of Positive, Negative and Neutral tweets
-    opinions = [0, 0, 0];
-    for(var i = 0; i < allTweets.length; i++)
-    switch(allTweets[i].properties.opinion) {
-      case 'Positive':
-          opinions[0]++;
-          break;
-      case 'Neutral':
-          opinions[1]++;
-          break;
-      case 'Negative':
-          opinions[2]++;
-          break;
+    opinions = [0, 0, 0]; //set all opinons to 0
+
+    for(var i = 0; i < allTweets.length; i++){
+      switch(allTweets[i].properties.opinion) {
+        case 'Positive':
+            opinions[0]++;
+            break;
+        case 'Neutral':
+            opinions[1]++;
+            break;
+        case 'Negative':
+            opinions[2]++;
+            break;
+      }
     }
 }
 
 //Calculate the font size of the trending subject, depending on its tweet volume
+//min size is 10px and max size is 25px
 function calculateFontSize(pro) {
     var fontSize = pro * 100 + 5;
     if(fontSize < 10)
@@ -241,6 +210,7 @@ function calculateFontSize(pro) {
     return fontSize;
 }
 
+//Make element fade out
 function fade(element) {
     var op = 1;  // initial opacity
     var timer = setInterval(function () {
@@ -254,6 +224,7 @@ function fade(element) {
     }, 50);
 }
 
+//Make element fade in
 function unfade(element) {
     var op = 0.1;  // initial opacity
     element.style.display = 'block';
