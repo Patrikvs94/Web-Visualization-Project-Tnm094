@@ -1,24 +1,26 @@
 google.charts.load('current', {'packages':['corechart']});
 
 
-google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawChart); 
 
 
 function drawChart() {
 
   var data = google.visualization.arrayToDataTable([
-    ['Attityd', 'Antal'],
+    /*['Attityd', 'Antal'],
     ['Positiv',     11],
     ['Negative',  2],
-    ['Neutral',    7]
+    ['Neutral',    7]*/
 
-    /*
+    
     ['Attityd', 'Antal'],
     ['Positiv',     opinions[0]],
     ['Negative', opinions[2]],
     ['Neutral',    opinions[1]]
-    */
+    
   ]);
+
+  console.log("drawchart kallas på");
 
   var options = {
     //title: 'My Daily Activities'

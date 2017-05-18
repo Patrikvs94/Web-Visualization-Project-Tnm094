@@ -3,7 +3,7 @@ var timeShift = 59- currentdate.getMinutes();
 console.log(currentdate.getHours() + ":" + currentdate.getMinutes());
 
 
-function SelectedData()
+function selectedData()
 {
   if(parseInt(document.getElementById('slider').value) < 60)
   {
@@ -38,4 +38,10 @@ document.getElementById('slider').addEventListener('input', function(e) {
     document.getElementById('active-minute').innerText = "Live";
   }
   countOpinions(allTheTweets[selectedData()]);
+
+  //rita upp piechart
+  drawChart();
+
+
+
 });

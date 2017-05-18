@@ -7,6 +7,9 @@ var subject = "";
 var opinions = [0, 0, 0]; //Positive, Neutral, Negative
 var tweetSize = 0;
 
+
+
+
 //retrieve twitter data from python
 $(document).ready(function() {
 
@@ -69,7 +72,9 @@ $(document).ready(function() {
         //}
 
 
-          countOpinions();
+        //rita upp piechart
+        drawChart();
+
 
         });
 
@@ -144,6 +149,11 @@ $(document).ready(function() {
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
                 collection.features = [];
+
+
+                
+
+
 
                 //Retrieve data from python and send data to python
                 $.ajax({
@@ -244,3 +254,5 @@ function unfade(element) {
         op += op * 0.1;
     }, 10);
 }
+
+

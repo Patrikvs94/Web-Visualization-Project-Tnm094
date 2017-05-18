@@ -27,7 +27,7 @@ map.on("load", function() {
     /*
     map.getSource("tweets").setData({"type": "FeatureCollection", "features": collection.features});
     */
-      minute = SelectedData();
+      minute = selectedData();
 
       if(allTheTweets[minute])
         map.getSource("tweets").setData({"type": "FeatureCollection", "features": allTheTweets[minute] });
