@@ -15,13 +15,24 @@ from config import CONF
 import random
 import urllib
 import requests
+import urllib2
+import sys
+import base64
+import json
 
 #to randomize a sentiment value
 import random
 
-sentiment_url = 'http://sentiment.vivekn.com/api/text/'
+sentID=1
 
 twitter = Twython(CONF['APP_KEY'], CONF['APP_SECRET'],CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])
+
+# Azure portal URL.
+base_url = 'https://westus.api.cognitive.microsoft.com/'
+# Your account key goes here.
+account_key = 'b561db1cd733414aa18a68450f338b50'
+
+headers = {'Content-Type':'application/json', 'Ocp-Apim-Subscription-Key':account_key}
 
 
 app = Flask(__name__)
@@ -81,7 +92,7 @@ def process():
     subject = request.form['message']
     print subject + 'has been clicked /Python'
     gevent.spawn(collect_tweets_data_stream, sub=subject)
-    collect_tweets_data_rest(subject)
+   # collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
@@ -103,13 +114,12 @@ def collect_tweets_data_stream(sub):
                 coordinates = []
                 coordinates.append(tweet_location['longitude']+0.0001*random.randint(1, 10))
                 coordinates.append(tweet_location['latitude']+0.0001*random.randint(1, 10))
-                print(coordinates[1]);
                 # word analysis
 
                 #to randomize a senitment value
                 rand_sent = ['Positive', 'Negative', 'Neutral']
-                temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': "live" }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 print tweet['text'].encode('cp850', errors='replace')
+                temp = {'type': "Feature" , 'properties': {'opinion': sentiment(tweet['text'].encode('cp850', errors='replace')), 'id': str(tweet['id']), 'time': "live" }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 socketio.emit('tweet', temp, namespace='/tweets')
 
     print sub + ' is no longer the subject'
@@ -133,9 +143,8 @@ def collect_tweets_data_rest(sub):
 
                 #to randomize a senitment value
                 rand_sent = ['Positive', 'Negative', 'Neutral']
-                temp = {'type': "Feature" , 'properties': {'opinion': random.choice(rand_sent) , 'id': str(tweet['id']), 'time': tweet['created_at'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                print tweet['created_at']
                 print tweet['text'].encode('cp850', errors='replace')
+                temp = {'type': "Feature" , 'properties': {'opinion': sentiment(tweet['text'].encode('cp850', errors='replace')) , 'id': str(tweet['id']), 'time': tweet['created_at'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
                 socketio.emit('tweet', temp, namespace='/tweets')
             counter =counter+1;
             if counter%100==0 or sub != subject:
@@ -150,10 +159,10 @@ def tweet_has_location(tweet):
         geolocator = Nominatim()
         try:
             location = geolocator.geocode(encodedPlace.decode("utf-8"), timeout=10)
+            if location is not None:
+                return {'exist': True, 'longitude': location.longitude, 'latitude': location.latitude}
         except GeocoderTimedOut as e:
             print("Error: geocode failed")
-        if location is not None:
-            return {'exist': True, 'longitude': location.longitude, 'latitude': location.latitude}
     return {'exist': False}
 
 
@@ -165,6 +174,31 @@ def tweets_connect():
 @socketio.on('disconnect', namespace='/tweets')
 def tweets_disconnect():
     print('Client disconnected')
+
+
+def sentiment(phrase):
+    # Detect sentiment.
+    global sentID
+    sentID=sentID+1
+    sent = '{"documents":[{"id":"'+ str(sentID)+'","text": ' + '"' + phrase + '"' + ', }]}'
+    input_texts = sent
+    #input_texts = '{"documents":[{"id":"1","text":"Je mappelle baguette"}]}'
+    batch_sentiment_url = base_url + 'text/analytics/v2.0/sentiment'
+    try:
+        req = urllib2.Request(batch_sentiment_url, input_texts, headers)
+        response = urllib2.urlopen(req)
+        result = response.read()
+        obj = json.loads(result)
+        score = obj['documents'][0]['score']
+        if score > 0.75:
+            return "Positive"
+        elif score < 0.25:
+            return "Negative"
+        else:
+            return "Neutral"
+    except urllib2.HTTPError:
+        print "400 Error"
+
 
 if __name__ == '__main__':
     try:
