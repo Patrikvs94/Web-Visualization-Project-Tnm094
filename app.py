@@ -6,7 +6,7 @@ import gevent
 import os
 from flask import Flask, render_template, request, jsonify
 from flask.ext.socketio import SocketIO, emit
-from twython import TwythonStreamer, Twython
+from twython import TwythonStreamer, Twython, TwythonError
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 from geojson import Feature, Point, FeatureCollection
@@ -131,30 +131,44 @@ def collect_tweets_data_rest(sub):
     print 'subject = ' + subject
     print 'sub = ' + sub
     while counter < 2000 or sub == subject:
-        for tweet in results:
-            tweet_location = tweet_has_location(tweet)
-            if tweet_location['exist']:
-                #print tweet['created_at']
-                #print tweet['text']
-                #print counter
-                coordinates = []
-                coordinates.append(tweet_location['longitude']+0.001*random.randint(1, 10))
-                coordinates.append(tweet_location['latitude']+0.001*random.randint(1, 10))
-                # ordanalys
+        try:
+            for tweet in results:
+                tweet_location = tweet_has_location(tweet)
+                if tweet_location['exist']:
+                    #print tweet['created_at']
+                    #print tweet['text']
+                    #print counter
+                    coordinates = []
+                    coordinates.append(tweet_location['longitude']+0.001*random.randint(1, 10))
+                    coordinates.append(tweet_location['latitude']+0.001*random.randint(1, 10))
+                    # ordanalys
 
-                #to randomize a senitment value
-                rand_sent = ['Positive', 'Negative', 'Neutral']
-                print tweet['text'].encode('cp850', errors='replace')
-                temp = {'type': "Feature" , 'properties': {'opinion': sentiment(tweet['text'].encode('cp850', errors='replace')) , 'id': str(tweet['id']), 'time': tweet['created_at'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
-                socketio.emit('tweet', temp, namespace='/tweets')
-            counter =counter+1;
-            if counter%100==0 or sub != subject:
-                break
+                    #to randomize a senitment value
+                    rand_sent = ['Positive', 'Negative', 'Neutral']
+                    print tweet['text'].encode('cp850', errors='replace')
+                    temp = {'type': "Feature" , 'properties': {'opinion': sentiment(tweet['text'].encode('cp850', errors='replace')) , 'id': str(tweet['id']), 'time': tweet['created_at'] }, 'geometry':{'type': "Point", 'coordinates': coordinates } }
+                    socketio.emit('tweet', temp, namespace='/tweets')
+                counter =counter+1;
+                if counter%100==0 or sub != subject:
+                    break
+        except TwythonError as init:
+            print "Rest API limit error "
+            break;
         results = twitter.cursor(twitter.search, q=query, result_type='recent', count='100', max_id=tweet['id'])
 
 
 def tweet_has_location(tweet):
-    place = tweet['user']['location']
+    place = tweet['place']
+    encodeplace= ""
+    if place is not None:
+        #place = tweet['place']['full_name']
+        coordinates = place['bounding_box']['coordinates'][0]
+        longitude = abs(coordinates[0][0] -coordinates [3][0])/2 + coordinates [0][0]
+        latitude = abs(coordinates [0][1] -coordinates [1][1])/2 + coordinates [0][1]
+        print "Location fetched via Tweet"
+        return {'exist': True, 'longitude': longitude, 'latitude': latitude}
+        if place is None:
+            place = tweet['user']['location']
     if place is not None:
         encodedPlace = place.encode("utf-8", errors='ignore')
         geolocator = Nominatim()

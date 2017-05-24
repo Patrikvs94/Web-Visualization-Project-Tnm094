@@ -123,7 +123,7 @@ $(document).ready(function() {
                 opinions = [0, 0, 0, 0]; //empty opinon-list when a new subject is sellected
 
                 console.log('//' + document.domain + ':' + location.port + namespace);
-                collection.features = [];
+                allTheTweets = {};
 
 
                 //Retrieve data from python and send data to python
