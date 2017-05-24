@@ -1,7 +1,7 @@
 google.charts.load('current', {'packages':['corechart']});
 
 
-google.charts.setOnLoadCallback(drawChart); 
+google.charts.setOnLoadCallback(drawChart);
 
 
 function drawChart() {
@@ -12,13 +12,13 @@ function drawChart() {
     ['Negative',  2],
     ['Neutral',    7]*/
 
-    
+
     ['Attityd', 'Antal'],
     ['Positiv',     opinions[0]],
     ['Negative', opinions[2]],
     ['Neutral',    opinions[1]],
     ['Välj en trend för att visa attityd', opinions[3]]
-    
+
   ]);
 
   console.log("drawchart kallas på");
