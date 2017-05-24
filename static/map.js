@@ -34,7 +34,7 @@ map.on("load", function() {
         }
 
     }, 100);
-    
+
     map.addSource("tweets", {
         "type": "geojson",
         "data": {"type": "FeatureCollection", "features": collection.features}
@@ -54,7 +54,7 @@ map.on("load", function() {
             },
             "filter": ["==", "opinion", colors[0]]
         })
-    })
+    }) 
 });
 
 
@@ -80,7 +80,7 @@ map.on('click', function (e) {
     //When clicked show the right twitter widget
     var twtt = twttr.widgets.createTweet(
         feature.properties.id,
-        document.getElementById('container'), 
+        document.getElementById('container'),
         { width: "300"}
     );
 });

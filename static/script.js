@@ -56,6 +56,9 @@ $(document).ready(function() {
       tweetSize = opinions[0] + opinions[1] + opinions[2]; //total number of tweets
       $("#nrOfTweets").html(tweetSize); //set nrOfTweets to the number of tweets for the selected subject
 
+      //Draw the pie chart when new tweets are retrieved
+      drawChart();
+
       //hide loader and unblur map when tweets are showing
       $('#loader').hide();
       changefilter(0);

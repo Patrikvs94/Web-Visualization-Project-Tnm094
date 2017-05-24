@@ -92,7 +92,7 @@ def process():
     subject = request.form['message']
     print subject + 'has been clicked /Python'
     gevent.spawn(collect_tweets_data_stream, sub=subject)
-   # collect_tweets_data_rest(subject)
+    collect_tweets_data_rest(subject)
     print 'collect_tweets_data() funkar'
     return jsonify({'message': subject})
 
