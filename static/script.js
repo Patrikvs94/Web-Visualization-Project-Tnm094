@@ -59,9 +59,11 @@ $(document).ready(function() {
       //Draw the pie chart when new tweets are retrieved
       drawChart();
 
-      //hide loader and unblur map when tweets are showing
-      $('#loader').hide();
-      changefilter(0);
+      //hide loader and unblur map when live-tweets are showing
+      if(msg.properties.time == "live") {
+        $('#loader').hide();
+        changefilter(0);
+      }
       map.setInteractive = false;
     });
 
