@@ -9,7 +9,7 @@ gevent-websocket==0.9.5
 greenlet==0.4.7
 gunicorn==19.7.1
 itsdangerous==0.24
-Jinja2==2.7.3
+Jinja2==2.11.3
 MarkupSafe==0.23
 oauthlib==0.7.2
 packaging==16.8
